@@ -91,7 +91,7 @@
     margin: 10px;
     display: inline-block;
     float: right;
-    background: url(icons.png);
+    background: url(img/icons.png);
     /* background-position: -115px -308px; */
     background-size: contain;
     position: fixed;
@@ -108,7 +108,7 @@
     margin: 10px;
     display: inline-block;
     float: right;
-    background: url(delete.png);
+    background: url(img/delete.png);
     background-size: cover;
     position: fixed;
     right: 0px;
@@ -124,7 +124,7 @@
     margin: 10px;
     display: inline-block;
     float: right;
-    background: url(save.png);
+    background: url(img/save.png);
     background-size: cover;
     display: none;
     position: fixed;
@@ -298,7 +298,7 @@ button{
         margin: 10px;
         display: inline-block;
         float: right;
-        background: url(edit.png);
+        background: url(img/edit.png);
         background-size: cover;
     }
     .delete_task{    
@@ -308,7 +308,7 @@ button{
         margin: 10px;
         display: inline-block;
         float: right;
-        background: url(delete.png);
+        background: url(img/delete.png);
         background-size: cover;
     }
     .save{
@@ -318,7 +318,7 @@ button{
         margin: 10px;
         display: inline-block;
         float: right;
-        background: url(save.png);
+        background: url(img/save.png);
         background-size: cover;
         display: none;
     }
