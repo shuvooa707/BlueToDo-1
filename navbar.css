@@ -1,0 +1,43 @@
+#nav{
+    width: 100%;
+    background: #4CAF50;
+    position: fixed;
+    top:0px;
+    left: 0px;
+    z-index: 1000;
+}
+#nav span{
+    display: inline-block;
+    font-size: 17px;
+    text-decoration: none;
+    color: white;
+    padding:14px 20px;
+    font-family: Verdana,sans-serif;
+    float: left;
+}
+#nav span:last-child{
+    float: right;
+}
+#nav span a {
+    text-decoration: none;
+    color: white;
+}
+
+#nav span:hover{
+    background: black;
+}
+
+
+@media only screen and (max-width:517px){
+    #nav{
+        background: #992f3f;
+    }
+    #nav a{
+        display: none;
+    }
+    #nav a:first-child{
+        display: block;
+        cursor: pointer;
+        text-align: center;
+    }  
+}
