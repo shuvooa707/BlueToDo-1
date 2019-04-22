@@ -14,17 +14,20 @@
     padding:14px 20px;
     font-family: Verdana,sans-serif;
     float: left;
+    cursor: pointer;
+    transform: scale(1.1);
 }
 #nav span:last-child{
     float: right;
 }
 #nav span a {
     text-decoration: none;
-    color: white;
+    color: rgb(255, 255, 255);
 }
 
 #nav span:hover{
     background: black;
+    transform: scale(1);
 }
 
 

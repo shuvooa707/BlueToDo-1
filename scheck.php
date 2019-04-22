@@ -24,7 +24,7 @@
                 $_SESSION["password"] = $_POST["password"];
                 echo "x1x";
             } else {
-                echo $result;
+                echo "x0x";
             }
 
         // This block of code inserts username and password of newly signed 

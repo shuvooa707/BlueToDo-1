@@ -2,7 +2,7 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     transition-duration: 100ms;
     color: #000000;
-}    
+} 
 #userPlate{
     width : 180px;
     height: 100px;
@@ -23,33 +23,28 @@
 
 
 #container{
-    border: .1em solid #9d791b2b;
-    border-radius: 10px;
-    box-shadow: inset 0px 2px 20px 0px #5c59598f;
+    border: .1em solid #2a272021;
+    /* border-radius: 10px; */
+    /* box-shadow: inset 0px 2px 20px 0px #5c59598f; */
     width: 450px;
     min-height: 130px;
     background: #ffffff;
     position: relative;
-    left: 50%;
-    transform: translateX(-50%);
+    float: left;
     top: 100px;
     /* padding: 10px; */
+    margin-left: 100px;
 }
 #header{
-    /* border-radius: 10px 10px 0px 0px; */
     width: 100%;
-    /* height: 60px; */
     background: #4CAF50;
     padding: 15px 0px;
-    /* padding-top: 32px; */
     position: relative;
     margin: 0px;
     top: -2px;
-    /* left: -14px; */
     font-size: x-large;
     color: #ffffff;
     text-align: center;
-    box-shadow: inset 0px 0px 15px #a24a4aa1;
 }
 #task_container{
     /* border: 1px solid #aaa; */
@@ -74,75 +69,100 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-align: center;
     display: inline-block;
+    margin: 15px 10px;
 }
-.numberTag{
-    display: inline-block;
+.fuzzy{
+    filter:blur(1px);
+}
+.numberTagTask{
+    border: .03em solid #4CAF50;
+    cursor: pointer;
     width: 20px;
     height: 20px;
+    margin: 12px 5px;
     text-align: center;
     line-height: 20px;
-    border-radius: 20px;
-    background: #ffc200;
+    display: block;
+    float: left;
+    background: #10a810;
+    color: yellow;
+    border-radius: 2px;
+    box-shadow: 1px 1px 1px green;
 }
 .edit_task{
     cursor: pointer;
-    width: 15px;
-    height: 15px;
-    margin: 10px;
+    width: 18px;
+    height: 17px;
+    margin: 15px 10px;
     display: inline-block;
     float: right;
-    background: url(img/icons.png);
+    background: url(img/edit2.png);
     /* background-position: -115px -308px; */
     background-size: contain;
-    position: fixed;
-    right: 30px;
+    position: relative;
+    opacity:.5;
+    transition-duration:.6s;
 }
 .edit_task:hover{
+    /* width: 18px; */
+    /* height: 18px; */
+    opacity:1;
+    transform:rotate(360deg);
+}
+.delete_task{
+    cursor: pointer;
     width: 18px;
     height: 18px;
-}
-.delete_task{    
-    cursor: pointer;
-    width: 15px;
-    height: 15px;
-    margin: 10px;
+    margin: 15px 10px;
     display: inline-block;
     float: right;
     background: url(img/delete.png);
     background-size: cover;
-    position: fixed;
+    position: relative;
     right: 0px;
+    opacity:.5;
+    transition-duration:.6s;    
 }
 .delete_task:hover{
     width: 18px;
     height: 18px;
+    opacity:1;
+    transform:scale(1.1) rotate(360deg);
 }
 .save{
+    box-sizing: border-box;
+    border: 1.5px solid #4CAF50;
     cursor: pointer;
-    width: 13px;
-    height: 14px;
-    margin: 10px;
+    width: 75px;
+    height: 30px;
+    margin: 5px;
+    text-align: center;
+    line-height: 25px;
     display: inline-block;
     float: right;
-    background: url(img/save.png);
+    background: #d9d9d900;
     background-size: cover;
     display: none;
-    position: fixed;
-    right: 15px;
+    /* position: fixed; */
+    /* right: 25px; */
+    left: 12px;
+    color: #10a810;
 }
-.save:hover{    
-    width: 17px;
-    height: 17px;
+
+.save:hover{ 
+    background: #10a810;  
+    color: white;
 }
 #addtask{
-    box-shadow: inset 11px -1px 20px 0px #7a6f6f;
+    box-shadow: 0px 0px 5px 0px #7a6f6f;
     width: 50px;
     height: 50px;
-    border-radius: 25px;
+    border-radius: 5px;
+    border: .03em solid #4fca54;
     text-align: center;
     line-height: 50px;
-    background: #ba918c;
-    color: #ffffff;
+    background: #fff200;
+    color: #52c256;
     position: relative;
     margin: 24px 12px;
     font-size: 57px;
@@ -151,12 +171,15 @@
     display: inline-block;
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
+#addlist:hover,#addtask:hover {
+    filter: grayscale(1);
+}
 
 #editedText{
     width: 250px;
     margin-left: 10px;
     border-radius: 15px;
-    border: .1em solid blue;
+    border: .2em solid blue;
     transition-duration: .2s;
     padding: 5px 10px;
     color: #515151;
@@ -170,36 +193,45 @@
 }
 
 #clickToAdd{
-    color: #1b3d20c9;
     display: inline-block;
+    font-family: cursive;
+    border: .1em solid #aaaaaa38;
+    padding: 1px 5px;
+    background: #a2d3b221;
+    border-radius: 15px;
+    font-size: 15px;
+    color: #938b00;
 }
 
 #loginContainer{
     box-shadow: 1px 1px solid #aaa;
     border: .1em solid #a2a2a22e;
     display: inline-block;
-    background: #5bdbd83d;
+    background: #4caf50c9;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -80%);
     border-radius: 20px;
-    box-shadow: inset 1px 1px 20px #aaa;
+    /* box-shadow: inset 1px 1px 20px #aaa; */
 }
 #loginContainer > div{
     padding: 20px 50px;
 }
 #userName{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 15px;
+    color: #016201;
     width: 250px;
     border-radius: 20px;
-    border: .1em solid blue;
+    border: .1em solid yellow;
     transition-duration: .2s;
     padding: 8px 10px;
 }
 #password{
     width: 250px;
     border-radius: 20px;
-    border: .1em solid blue;
+    border: .1em solid yellow;
     transition-duration: .2s;
     padding: 8px 10px;
     margin-bottom: 10px;
@@ -214,12 +246,13 @@ label{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     margin-top:10px;
     margin-bottom:5px;
+    color: white;
 }
 button{
-    color: white;
+    color: green;
     padding: 10px 43px;
-    background: #0080002b;
-    border: .1em solid #0080002b;
+    background: yellow;
+    border: .1em solid green;
     /* box-shadow: 1px 1px 10px #aaa; */
     margin-bottom:5px;
     margin-top:10px;
@@ -229,8 +262,24 @@ button{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 14px;
 }
+input[type="checkbox"]{
+    transform: scale(1.5);
+}
 
 #massage{
+}
+
+.animate1{
+    animation-name: example;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease;
+    animation-timing-function: ease-out;
+}
+@keyframes example {
+    0%   {margin-left: 0px;}
+    50%   {margin-left: 25px;}
+    100% {margin-left: 0px;}
 }
 
 @media only screen and (max-width:500px){

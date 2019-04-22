@@ -1,0 +1,210 @@
+#listgroup-container{
+    border: .1em solid #00000030;
+    /* border-radius: 10px; */
+    /* box-shadow: inset 0px 2px 20px 0px #5c59598f; */
+    width: 350px;
+    min-height: 130px;
+    background: #ffffff;
+    position: relative;
+    float:left;
+    top: 100px;
+    /* padding: 10px; */
+    margin-left: 180px;
+    padding-top: 10px;
+}
+#list-container-header{
+    width: 100%;
+    background: #4CAF50;
+    padding: 15px 0px;
+    position: relative;
+    margin: 0px;
+    top: -12px;
+    font-size: x-large;
+    color: #ffffff;
+    text-align: center;
+}
+.list_name{
+    font-size: 16px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+    display: inline-block;
+    padding: 10px;
+    cursor: pointer;
+    margin-left: 5px;
+    color: #0000009e;
+    font-weight: 500;
+}
+.list{
+    overflow: hidden;
+    /* width: 100%; */
+    /* margin-bottom: 10px; */
+    border-bottom: 1px solid #2421041c;
+    /* padding-top: 10px; */
+    padding-bottom: 5px;
+    color: #aaa;
+}
+.list:first-child {
+    margin-top: -12px;
+}
+.list:hover{
+    box-shadow:inset 0px 0px 10px #aaa;
+    background: #eee;
+}
+.selected{
+    /* box-shadow:inset 0px 0px 10px #aaa; */
+    background: #eee;
+}
+.numberTagList{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    border-radius: 2px;
+    background: #fff20082;
+    margin-left: 5px;
+    color: #4caf50;
+    box-shadow: 0px 0px 2px #00000085;
+    border: 1px solid #4caf50;
+}
+.edit_list{
+    cursor: pointer;
+    width: 16px;
+    height: 15px;
+    margin: 10px;
+    display: inline-block;
+    float: right;
+    background: url(img/edit2.png);
+    /* background-position: -115px -308px; */
+    background-size: contain;
+    position: relative;
+}
+.edit_list:hover{
+    width: 18px;
+    height: 18px;
+}
+.delete_list{    
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+    margin: 10px;
+    display: inline-block;
+    float: right;
+    background: url(img/delete.png);
+    background-size: cover;
+    position: relative;
+    right: 0px;
+}
+.delete_list:hover{
+    transform: scale(1.1);
+}
+.save_list{
+    box-sizing: border-box;
+    border: 1.5px solid #4CAF50;
+    cursor: pointer;
+    width: 75px;
+    height: 30px;
+    margin: 5px;
+    text-align: center;
+    line-height: 30px;
+    display: inline-block;
+    float: right;
+    background: #d9d9d900;
+    background-size: cover;
+    display: none;
+    /* position: fixed; */
+    /* right: 25px; */
+    left: 12px;
+    color: #10a810;
+}
+.save_list:hover{
+    
+    box-sizing: border-box;
+    border: 1.5px solid #4CAF50;
+    cursor: pointer;
+    width: 75px;
+    height: 30px;
+    margin: 5px;
+    text-align: center;
+    line-height: 30px;
+    display: inline-block;
+    float: right;
+    background: #d9d9d900;
+    background-size: cover;
+    display: none;
+    /* position: fixed; */
+    /* right: 25px; */
+    left: 12px;
+    color: #10a810;
+}
+
+#editedTextList{
+    width: 180px;
+    margin-top: 5px;
+    margin-left: 10px;
+    /* border-radius: 15px; */
+    border: .2em solid #00b21336;
+    transition-duration: .2s;
+    padding: 5px 10px;
+    color: #515151;
+    font-weight: 700;
+    transition-duration: .2s;
+}
+#editedTextList:focus{
+    width: 180px;
+    margin-left: 10px;
+    border: .2em solid orange;
+    border-radius: 0px;
+    transition-duration: .2s;
+}
+
+#addlist{
+    box-shadow: 0px 1px 5px 0px #7a6f6f;
+    width: 50px;
+    height: 50px;
+    border: .03em solid #ffff09;
+    text-align: center;
+    line-height: 45px;
+    background: #4caf50;
+    color: #fff200;
+    position: relative;
+    margin: 24px 12px;
+    font-size: 57px;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    border-radius: 7px;
+}
+
+#editedText{
+    width: 250px;
+    margin-top: 5px;
+    margin-left: 10px;
+    border-radius: 15px;
+    border: .1em solid blue;
+    transition-duration: .2s;
+    padding: 5px 10px;
+    color: #515151;
+    font-weight: 700;
+}
+#editedText:focus{
+    width: 250px;
+    margin-left: 10px;
+    border-radius: 0px;
+    border: .1em solid orange;
+}
+
+#clickToAddlist{
+    color: #1b3d20c9;
+    display: inline-block;
+    font-family: cursive;
+    border: .1em solid #aaaaaa38;
+    padding: 1px 5px;
+    /* width: 100px; */
+    background: #a2d3b221;
+    border-radius: 15px;
+    /* height: 20px; */
+    font-size: 15px;
+    color: #014901;
+}

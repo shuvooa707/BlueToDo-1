@@ -25,7 +25,8 @@
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                         if(xmlhttp.responseText =="x1x"){
                             console.log(xmlhttp.responseText);
-                            window.location = "login.php";
+                            on("Your Account Has Been Deleted");
+                            setTimeout(()=>{window.location = "login.php"},2000);
                         }
                         else {
                             
@@ -51,5 +52,6 @@
             <h2><strong>Password</strong> : <?php echo $_SESSION["password"]; ?></h2>
             <p onclick="deleteAccount()">delete account</p>
         </div>
+    <script src="modalbox.js"></script>
 </body>
 </html>

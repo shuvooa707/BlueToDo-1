@@ -16,7 +16,7 @@
                     if(this.responseText.trim()=="x1x"){
                         window.location = "index.php";
                     } else {
-                        console.log(this.responseText);
+                        on("User Name and Password Doesn't Match!! Please Try Again");
                     }
                 }
             };
@@ -41,5 +41,6 @@
             <label for="userMatch" id="massage"></label>
         </div>
     </div>
+    <script src="modalbox.js"></script>
 </body>
 </html>
