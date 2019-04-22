@@ -37,12 +37,14 @@
     overflow: hidden;
 }
 .list{
+    height: 50px;
     overflow: hidden;
     /* width: 100%; */
     /* margin-bottom: 10px; */
     border-bottom: 1px solid #2421041c;
     /* padding-top: 10px; */
-    padding-bottom: 5px;
+    /* padding-bottom: 5px; */
+    transition-duration: .1s;
 }
 .list:first-child {
     margin-top: -12px;

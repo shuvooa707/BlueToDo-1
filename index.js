@@ -63,8 +63,19 @@ function addnew(nodeToBeAdded){
     }
 }
 
-function deleteTask(elem){ 
-    elem.parentElement.remove();
+function deleteTask(elem){   
+    // reducing the totaltask by one
+    totalTask--;
+    // This block of code sets the animation of deletion act
+    elem.parentElement.style.transitionDuration=".8s";
+    elem.parentElement.style.height="0px";
+    elem.parentElement.style.opacity="0"; 
+    elem.parentElement.style.border="0"; 
+    elem.parentElement.style.marginBottom="0"; 
+    elem.parentElement.style.padding="0"; 
+    setTimeout( ()=>{
+        elem.parentElement.remove();
+    },1500);
     //console.log(elem + "Deleted ");
     updateOnline("delete",elem.parentElement);
 

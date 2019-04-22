@@ -39,7 +39,17 @@ function addnewlist(nodeToBeAdded){
 function deleteList(elem){ 
     totalTask = 0;
     totalList--;
-    elem.parentElement.remove();
+    
+    // This block of code sets the animation of deletion act
+    elem.parentElement.style.transitionDuration=".8s";
+    elem.parentElement.style.height="0px";
+    elem.parentElement.style.opacity="0"; 
+    elem.parentElement.style.border="0"; 
+    elem.parentElement.style.margin="0"; 
+    elem.parentElement.style.padding="0";    
+    setTimeout( ()=>{
+        elem.parentElement.remove();
+    },1100);
     //console.log(elem + "Deleted ");
     updateOnlineList("delete",elem.parentElement);
     // Clearing the task container
