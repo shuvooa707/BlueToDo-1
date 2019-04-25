@@ -44,13 +44,14 @@
     
     <div id="container">
         <div id="header">Your Tasks</div>
+        <div id="addtask" title="Click to Add a New Task" onclick="addnew()" autofocus>
+            +
+        </div>
+        <h4 id="clickToAdd" class="animate2">Click To Add A New Task</h4>
+
         <div id="task_container">
             
         </div>
-        <div id="addtask" title="Click to Add a New Task" onclick="addnew()">
-            +
-        </div>
-        <h4 id="clickToAdd" class="animate1">Click To Add A New Task</h4>
     </div>
 
     <div style="visibility: hidden; position: absolute;z-index: -10010; width: 0px; height:0px;" id="fnode">

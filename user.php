@@ -15,6 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="navbar.css">
     <link rel="stylesheet" type="text/css" media="screen" href="user.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="modal.css">
     <script>
         function deleteAccount(params) {
             var validation = confirm("Are You Sure You Want to Delete This Account ???");
@@ -51,7 +52,14 @@
             <h2><strong>User Name</strong> : <?php echo $_SESSION["uname"]; ?></h2>
             <h2><strong>Password</strong> : <?php echo $_SESSION["password"]; ?></h2>
             <p onclick="deleteAccount()">delete account</p>
+        </div>    
+        
+        <div id="modal">
+        <div id="box">
+            <div id="close" onclick="off()">X</div>
+            <div id="msg"></div>
         </div>
+    </div>
     <script src="modalbox.js"></script>
 </body>
 </html>

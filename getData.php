@@ -41,7 +41,7 @@
             $primary_key = $row["primary_key"];
         }
     } else {
-        $sql = "SELECT primary_key FROM list WHERE username=\"$uname\" LIMIT 1";
+        $sql = "SELECT primary_key FROM list WHERE username=\"$uname\" AND is_selected=1";
         $result = $conn->query($sql);
     
         if ($result->num_rows > 0) {
@@ -69,7 +69,7 @@
 
     // fetches the lists from the database
     
-    if ( isset($primary_key) ){
+    if ( 1 ){
         $sql = "SELECT  * FROM list WHERE username=\"$uname\" ";
         $result = $conn->query($sql);
         $listdata = array();
@@ -83,7 +83,9 @@
         }
     }
     
-    if ( isset($primary_key) ){
+    if ( !isset($data) ){
+        echo json_encode($listdata) . "::listafter::" . "{}";
+    } else {
         echo json_encode($listdata) . "::listafter::" . json_encode($data);
     }
     $conn->close();

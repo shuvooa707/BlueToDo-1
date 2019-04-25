@@ -1,3 +1,4 @@
+
 <?php
     session_start();
     $servername = "localhost";
@@ -24,10 +25,11 @@
             while($row = $result->fetch_assoc()) {
                 $data[] = $row;
             }
+            echo json_encode($data) . "::listafter::" . " ";
         } else {
-            echo "x0xl";
+            // if no task found for the selected list
+            echo "{}";
         } 
-        echo json_encode($data) . "::listafter::" . " ";
         //making the current selected list unselected
         $sql = "UPDATE `list` SET `is_selected`=0 WHERE is_selected=1 AND username=\"$uname\" ";
         $result = $conn->query($sql);

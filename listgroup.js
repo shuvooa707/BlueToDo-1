@@ -53,7 +53,10 @@ function deleteList(elem){
     //console.log(elem + "Deleted ");
     updateOnlineList("delete",elem.parentElement);
     // Clearing the task container
-    document.querySelector("#task_container").innerHTML="";
+    console.log("from deleted"+elem);
+    if(elem.parentElement.classList.contains("selected")){
+        document.querySelector("#task_container").innerHTML="";
+    }
 }
 
 function editList(elem){
@@ -195,8 +198,8 @@ function updateList( node ){
             if(xmlhttp.responseText){
                 data = xmlhttp.responseText;
                 data = data.split("::listafter::")[0];
-                render(data);
                 changeSelectedHighlight( node );
+                render(data);
             }
             else {
                 

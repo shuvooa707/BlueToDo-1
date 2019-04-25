@@ -1,5 +1,5 @@
 #modal{
-    background: #4eff554a;
+    background: #ffff003d;
     width: 100%;
     height: 100%;
     margin: 0;
@@ -45,5 +45,5 @@
     cursor:pointer;
 }
 #msg{
-    color:red;
+    color: green;
 }

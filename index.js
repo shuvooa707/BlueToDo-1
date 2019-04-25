@@ -36,12 +36,6 @@ function completed(elem){
 
 
 function addnew(nodeToBeAdded){
-    // Check if any list selected or not
-    let tmpList = document.querySelector(".selected");
-    if (!tmpList) {
-        on("Select a List First !!",".5s");
-        return 0;
-    }
     // If no List Selected 
     var all_list = document.querySelector(".list");
     if(!all_list){
@@ -75,8 +69,7 @@ function deleteTask(elem){
     elem.parentElement.style.padding="0"; 
     setTimeout( ()=>{
         elem.parentElement.remove();
-    },1500);
-    //console.log(elem + "Deleted ");
+    },900);
     updateOnline("delete",elem.parentElement);
 
 }
@@ -91,6 +84,8 @@ function editTask(elem){
     p.querySelector(".save").style.display = "inline-block";
     p.querySelector("input").style.visibility = "hidden";
 
+
+    // creating a new input field and putting it on for getting new task name 
     var input = document.createElement("input");
     var type = document.createAttribute("type");
     var id = document.createAttribute("id");
@@ -121,17 +116,17 @@ function save(elem){
     p.querySelector(".save").style.display = "none";
     if(editedText.value.length < 1){
         deleteTask(elem);
-        //console.log(editedText);
     } else {
         updateOnline("save",elem.parentElement);
     }
 }
 
-// This function fetches data from database
+// This function fetches data from database after page loading 
 function onStartUp(){
     var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                // if it returns data then that data is given to render funtion to be put on DOM
 				if(xmlhttp.responseText){
                     data = xmlhttp.responseText;
                     if(data.includes("x0x") && data.includes("list_name") && data.includes("::listafter::")){
@@ -141,7 +136,9 @@ function onStartUp(){
                     } else if( data.includes("list_name") && data.includes("::listafter::") ) {
                         renderlistgroup(data.split("::listafter::")[0]);
                         render(data.split("::listafter::")[1]);
+                        console.log(data.split("::listafter::")[1]);
                     } else {
+                        // if something goes worng then prints it on console window
                         console.log(data);
                     }
 				}
@@ -150,26 +147,32 @@ function onStartUp(){
 				}
             }
         };
+    // getData.php is the file used to fetch data from database
     xmlhttp.open("POST", "getData.php", true);
     xmlhttp.send();
 }
 
-// This function renders data on the page 
-function render(data){
-    //console.log(data);
-    //var data  = `${data}`;
+// This function renders data on the page in other 
+// language it draws the data on on page using DOM
+function render(tasks){
     
-    // Clearing the task container
+    
+    // Clearing the task container on for rendering 
+    // or re-rendering the tasks
     document.querySelector("#task_container").innerHTML="";
     totalTask = 0;
-    if( data[0] == "x" ){
+    if( tasks[0] == "x" ){
         console.log("No Task Found");        
         return 0;
     }
-    data = JSON.parse(data);
+    if( tasks.includes("{}") ){
+        console.log(tasks);        
+        return 0;
+    } else {
+        tasks = JSON.parse(tasks);
+    }
     // Pushing the data to DOM
-    data.forEach((element,index,self) => {
-        //element = self[self.length-1-index];
+    tasks.forEach((element,index,self) => {
         if(element["status"]=="done"){
             status = "checked";
             tname = `<span class="task_name"><del class='fuzzy'>${element["taskname"]}</del></span>`;
@@ -199,13 +202,16 @@ function render(data){
     });    
 }
 
-
+// This function is used to update data on database like:-
+// when any list is deleted this funtion is triggered with 
+// the deleted list and operation to do which in case is delete 
+// as parameter. Same goes for renaming of list and creating new list
 function updateOnline(params,elem) {
     // get the primary key of current selected list
     var tmpList = document.querySelector(".selected");
     primary_key = tmpList.querySelector(".list_name").getAttributeNode("data-primary-key").value;
     primary_key = parseInt(primary_key);
-    var data;
+    var sql_operation;
     var taskName = elem.querySelector(".task_name").innerText;
     var status;
     if(elem.querySelector("input").checked){
@@ -215,22 +221,21 @@ function updateOnline(params,elem) {
     }
 
     if( params == "complete" ){
-        data = `op=${params}&taskname=${taskName}&status=${status}&primary_key=${primary_key}`;        
+        sql_operation = `op=${params}&taskname=${taskName}&status=${status}&primary_key=${primary_key}`;        
     } else if( params == "unfinished" ){
-        data = `op=${params}&taskname=${taskName}&status=${status}&primary_key=${primary_key}`;  
+        sql_operation = `op=${params}&taskname=${taskName}&status=${status}&primary_key=${primary_key}`;  
 
     } else if( params == "save" ) {
         taskName = document.querySelector(".selected");
         taskName = elem.querySelector(".task_name").innerText;
 
-        data = `op=${params}&taskname=${taskName}&status=${status}&primary_key=${primary_key}`;
+        sql_operation = `op=${params}&taskname=${taskName}&status=${status}&primary_key=${primary_key}`;
 
     } else if ( params == "delete" ) {
-        data = `op=${params}&taskname=${taskName}&primary_key=${primary_key}`;
+        sql_operation = `op=${params}&taskname=${taskName}&primary_key=${primary_key}`;
     } else if( params =="update" ){
 
     }
-    //console.log(data);
     
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
@@ -245,50 +250,48 @@ function updateOnline(params,elem) {
     };
     xmlhttp.open("POST", "updateData.php", true);
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.send(data);
-    console.log(data);
+    xmlhttp.send(sql_operation);
+    console.log(sql_operation);
 }
 
 function removeOld(elem) {    
-    // get the primary key of current selected list
+    // get the current selected list
     let tmpList = document.querySelector(".selected");
     if (!tmpList) {
         alert("Select a List First !!");
         return 0;
     }
-    let primary_key = tmpList.querySelector(".list_name").getAttributeNode("data-primary-key").value;
-    primary_key = parseInt(primary_key);
+    // get the primary key of current selected list
+    let primary_key = parseInt(tmpList.
+                        querySelector(".list_name").
+                        getAttributeNode("data-primary-key").
+                        value);
+    
+    
     var taskName = elem.querySelector(".task_name").innerText;
 
-    var data = `op=delete&taskname=${taskName}&primary_key=${primary_key}`;
-    console.log(data);
+    var sql_operation = `op=delete&taskname=${taskName}&primary_key=${primary_key}`;
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             if(xmlhttp.responseText){
-                //console.log(xmlhttp.responseText);
             }
             else {
-                
             }
         }
     };
     xmlhttp.open("POST", "updateData.php", true);
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.send(data);
+    xmlhttp.send(sql_operation);
 }
 
 function signout() {
     window.location = "signout.php";
 }
 
-function updateTasks(params) {
-    
-}
+window.onload = function(){          
+        onStartUp();
 
-
-window.onload = function(){
-    onStartUp();
 };
 
 // List of all the fucntions

@@ -23,6 +23,7 @@
 
 
 #container{
+    margin-bottom: 50px;
     border: .1em solid #2a272021;
     /* border-radius: 10px; */
     /* box-shadow: inset 0px 2px 20px 0px #5c59598f; */
@@ -34,6 +35,7 @@
     top: 100px;
     /* padding: 10px; */
     margin-left: 100px;
+    transition-duration: 1s;
 }
 #header{
     width: 100%;
@@ -47,24 +49,25 @@
     text-align: center;
 }
 #task_container{
-    /* border: 1px solid #aaa; */
+    border-top: 1px solid #0000001f;
     width: 100%;
 }
 
 .task{
     overflow: hidden;
-    /* width: 100%; */
-    margin-bottom: 10px;
     border-bottom: 1px solid #2421041c;
     transition-duration: 1s;
-    height: 50px;
+    min-height: 50px;
+    max-height: 150px;
 }
-
+.task:last-child {
+    border-bottom: 0;
+}
 .done{
     padding: 10px;
     display: inline-block;
     /* border: 2px solid #626262; */
-    margin: 0;
+    margin: 0px;
 }
 .task_name{
     font-size: 16px;
@@ -72,6 +75,8 @@
     text-align: center;
     display: inline-block;
     margin: 15px 10px;
+    max-width: 260px;
+    height: auto;
 }
 .fuzzy{
     filter:blur(1px);
@@ -99,15 +104,12 @@
     display: inline-block;
     float: right;
     background: url(img/edit2.png);
-    /* background-position: -115px -308px; */
     background-size: contain;
     position: relative;
     opacity:.5;
     transition-duration:.6s;
 }
 .edit_task:hover{
-    /* width: 18px; */
-    /* height: 18px; */
     opacity:1;
     transform:rotate(360deg);
 }
@@ -145,10 +147,10 @@
     background: #d9d9d900;
     background-size: cover;
     display: none;
-    /* position: fixed; */
-    /* right: 25px; */
     left: 12px;
     color: #10a810;
+    padding: 0px;
+    border-radius: 0;
 }
 
 .save:hover{ 
@@ -198,6 +200,7 @@
     display: inline-block;
     font-family: cursive;
     border: .1em solid #aaaaaa38;
+    border-bottom: 1px solid #aaa;
     padding: 1px 5px;
     background: #a2d3b221;
     border-radius: 15px;
@@ -215,7 +218,6 @@
     left: 50%;
     transform: translate(-50%, -80%);
     border-radius: 20px;
-    /* box-shadow: inset 1px 1px 20px #aaa; */
 }
 #loginContainer > div{
     padding: 20px 50px;
@@ -255,7 +257,6 @@ button{
     padding: 10px 43px;
     background: yellow;
     border: .1em solid green;
-    /* box-shadow: 1px 1px 10px #aaa; */
     margin-bottom:5px;
     margin-top:10px;
     display: inline-block;
@@ -264,8 +265,9 @@ button{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 14px;
 }
+/* making the check box 70% bigger */
 input[type="checkbox"]{
-    transform: scale(1.5);
+    transform: scale(1.7);
 }
 
 #massage{
@@ -282,6 +284,18 @@ input[type="checkbox"]{
     0%   {margin-left: 0px;}
     50%   {margin-left: 25px;}
     100% {margin-left: 0px;}
+}
+.animate2{
+    animation-name: example2;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease;
+    animation-timing-function: ease-out;
+}
+@keyframes example2 {
+    0%   {margin-left: 25px;}
+    50%   {margin-left: 0px;}
+    100% {margin-left: 25px;}
 }
 
 @media only screen and (max-width:320px){
