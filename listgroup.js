@@ -39,7 +39,10 @@ function addnewlist(nodeToBeAdded){
 function deleteList(elem){ 
     totalTask = 0;
     totalList--;
-    
+    var flag = 0;
+    if(elem.previousElementSibling.innerText.length > 0){
+        flag = 1;
+    }
     // This block of code sets the animation of deletion act
     elem.parentElement.style.transitionDuration=".8s";
     elem.parentElement.style.height="0px";
@@ -50,10 +53,12 @@ function deleteList(elem){
     setTimeout( ()=>{
         elem.parentElement.remove();
     },1100);
-    //console.log(elem + "Deleted ");
-    updateOnlineList("delete",elem.parentElement);
+    if(flag){
+        updateOnlineList("delete",elem.parentElement);
+        console.log(elem + "Deleted ");
+    }
     // Clearing the task container
-    console.log("from deleted"+elem);
+    //console.log( "from deleted" + elem );
     if(elem.parentElement.classList.contains("selected")){
         document.querySelector("#task_container").innerHTML="";
     }

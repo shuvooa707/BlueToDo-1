@@ -9,7 +9,7 @@ function createNewTask(){
                                 <input type="checkbox" onclick="completed(this)">
                             </span>
                             <span class="numberTagTask">${++totalTask}</span>
-                            <span class="task_name"></span>
+                            <span class="task_name"   onclick="pre_completed(this)"></span>
                             <span class="delete_task" title="Delete Task Name" onclick="deleteTask(this)"></span>
                             <span class="edit_task"  title="Edit Task Name" onclick="editTask(this)"></span>                
                             <span class="save" title="Click To Save" onclick="save(this)">Save</span>                
@@ -20,10 +20,18 @@ function createNewTask(){
     document.querySelector("#fnode").innerHTML = "";
     return newTask;
 }
+
+function pre_completed( elem ) {
+    var checkBox = elem.parentElement.querySelector("input[type='checkbox']");
+    //console.log(elem);
+    checkBox.click();
+    completed(checkBox);
+}
+
 function completed(elem){
     var r = elem.parentElement.parentElement.getElementsByClassName("task_name")[0];
     if( elem.checked ){
-        console.log(elem.value);
+        //console.log(elem.value);
         r.innerHTML = "<del class='fuzzy'>" + r.innerHTML + "</del>";
         elem.parentElement.parentElement.querySelector(".edit_task").style.display = "none";
         updateOnline("complete",elem.parentElement.parentElement);
@@ -109,6 +117,7 @@ function save(elem){
     Class.value = "task_name";
     span.setAttributeNode(Class);
     span.innerText = editedText.value; ///.substr(0,35);
+    span.onclick = "pre_completed(this)";
     editedText.replaceWith(span);
     p.querySelector(".edit_task").style.display = "inline-block";
     p.querySelector(".delete_task").style.display = "inline-block";
@@ -136,10 +145,10 @@ function onStartUp(){
                     } else if( data.includes("list_name") && data.includes("::listafter::") ) {
                         renderlistgroup(data.split("::listafter::")[0]);
                         render(data.split("::listafter::")[1]);
-                        console.log(data.split("::listafter::")[1]);
+                        //console.log(data.split("::listafter::")[1]);
                     } else {
                         // if something goes worng then prints it on console window
-                        console.log(data);
+                        //console.log(data);
                     }
 				}
 				else {
@@ -166,7 +175,7 @@ function render(tasks){
         return 0;
     }
     if( tasks.includes("{}") ){
-        console.log(tasks);        
+        //console.log(tasks);        
         return 0;
     } else {
         tasks = JSON.parse(tasks);
@@ -175,10 +184,10 @@ function render(tasks){
     tasks.forEach((element,index,self) => {
         if(element["status"]=="done"){
             status = "checked";
-            tname = `<span class="task_name"><del class='fuzzy'>${element["taskname"]}</del></span>`;
+            tname = `<span class="task_name"   onclick="pre_completed(this)"><del class='fuzzy'>${element["taskname"]}</del></span>`;
         } else {
             status = "";
-            tname = `<span class="task_name">${element["taskname"]}</span>`;
+            tname = `<span class="task_name"  onclick="pre_completed(this)">${element["taskname"]}</span>`;
         }
         var tmp_task = `<div class="task">
                             <span class="done">
@@ -241,7 +250,7 @@ function updateOnline(params,elem) {
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             if(xmlhttp.responseText){
-                console.log(xmlhttp.responseText);
+                //console.log(xmlhttp.responseText);
             }
             else {
                 

@@ -1,8 +1,10 @@
 *{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     transition-duration: .2s;
-    color: #000000;
+    color: rgba(0, 0, 0, 0.82);
 } 
+body{
+}
 #userPlate{
     width : 180px;
     height: 100px;
@@ -39,7 +41,7 @@
 }
 #header{
     width: 100%;
-    background: #4CAF50;
+    background: #563d7c;
     padding: 15px 0px;
     position: relative;
     margin: 0px;
@@ -77,12 +79,16 @@
     margin: 15px 10px;
     max-width: 260px;
     height: auto;
+    cursor: pointer;
+}
+.task_name:active{
+    color:yellow;
 }
 .fuzzy{
     filter:blur(1px);
 }
 .numberTagTask{
-    border: .03em solid #4CAF50;
+    border: .03em solid #563d7c;
     cursor: pointer;
     width: 20px;
     height: 20px;
@@ -91,10 +97,10 @@
     line-height: 20px;
     display: block;
     float: left;
-    background: #10a810;
-    color: yellow;
+    background: #563d7c;
+    color: white;
     border-radius: 2px;
-    box-shadow: 1px 1px 1px green;
+    box-shadow: 1px 1px 1px #563d7c99;
 }
 .edit_task{
     cursor: pointer;
@@ -162,11 +168,11 @@
     width: 50px;
     height: 50px;
     border-radius: 5px;
-    border: .03em solid #4fca54;
+    /* border: .01em solid #ffff; */
     text-align: center;
     line-height: 50px;
-    background: #fff200;
-    color: #52c256;
+    background: #563d7c;
+    color: white;
     position: relative;
     margin: 24px 12px;
     font-size: 57px;
@@ -183,7 +189,7 @@
     width: 250px;
     margin-left: 10px;
     border-radius: 15px;
-    border: .2em solid blue;
+    /* border: .2em solid blue; */
     transition-duration: .2s;
     padding: 5px 10px;
     color: #515151;
@@ -193,7 +199,7 @@
     width: 250px;
     margin-left: 10px;
     border-radius: 0px;
-    border: .1em solid orange;
+    /* border: .1em solid orange; */
 }
 
 #clickToAdd{
