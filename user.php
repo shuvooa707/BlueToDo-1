@@ -16,6 +16,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="navbar.css">
     <link rel="stylesheet" type="text/css" media="screen" href="user.css">
     <link rel="stylesheet" type="text/css" media="screen" href="modal.css">
+    <script src="index.js"></script>
     <script>
         function deleteAccount(params) {
             var validation = confirm("Are You Sure You Want to Delete This Account ???");

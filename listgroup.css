@@ -164,6 +164,7 @@
     margin-top: 5px;
     margin-left: -10px;
     border-radius: 15px;
+    border: 0px;
     /* border: .1em solid yellow; */
     outline: .03em solid #563d7c;
     transition-duration: .2s;
@@ -173,7 +174,7 @@
 }
 #editedText:focus{
     width: 250px;
-    border-radius: 0px;
+    /* border-radius: 0px; */
     /* border: .1em solid orange; */
 }
 
@@ -197,14 +198,14 @@
     line-height: 20px;
     display: block;
     float: left;
-    background: #563d7c;
-    color: white;
+    background: white;
+    color: #563d7c;
     border-radius: 2px;
     box-shadow: 1px 1px 1px #563d7cab;
 }
 
 .numberTagList:active{
     box-shadow: 0;
-    background:#4CAF50;  
-    color:white;  
+    background:white;  
+    color:#563d7c;  
 }

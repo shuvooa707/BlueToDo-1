@@ -181,9 +181,7 @@ body{
     display: inline-block;
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
-#addlist:hover,#addtask:hover {
-    filter: grayscale(1);
-}
+#addlist:hover,#addtask:hover {color: #563d7c;background: white;}
 
 #editedText{
     width: 250px;
@@ -218,7 +216,7 @@ body{
     box-shadow: 1px 1px solid #aaa;
     border: .1em solid #a2a2a22e;
     display: inline-block;
-    background: #4caf50c9;
+    background: #563d7c;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -231,25 +229,27 @@ body{
 #userName{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 15px;
-    color: #016201;
+    color: #563d7c;
     width: 250px;
-    border-radius: 20px;
-    border: .1em solid yellow;
+    /* border-radius: 20px; */
+    border: 0px;
+    /* border: .1em solid yellow; */
     transition-duration: .2s;
     padding: 8px 10px;
 }
 #password{
     width: 250px;
-    border-radius: 20px;
-    border: .1em solid yellow;
+    /* border-radius: 20px; */
+    border: 0px;
+    /* border: .1em solid yellow; */
     transition-duration: .2s;
     padding: 8px 10px;
     margin-bottom: 10px;
     display: block;
 }
 #userName:focus,#password:focus{
-    border-radius: 0px;
-    border: .1em solid orange;
+    /* border-radius: 0px; */
+    /* border: .1em solid orange; */
 }
 label{
     display: block;
@@ -259,14 +259,14 @@ label{
     color: white;
 }
 button{
-    color: green;
+    color: #563d7c;
     padding: 10px 43px;
-    background: yellow;
-    border: .1em solid green;
+    /* background: yellow; */
+    border: 0px;
     margin-bottom:5px;
     margin-top:10px;
     display: inline-block;
-    border-radius: 25px;
+    /* border-radius: 25px; */
     cursor: pointer;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 14px;
