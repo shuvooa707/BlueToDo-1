@@ -26,7 +26,7 @@ body{
 
 #container{
     margin-bottom: 50px;
-    border: .1em solid #2a272021;
+    border: .1em solid #563d7c75;
     /* border-radius: 10px; */
     /* box-shadow: inset 0px 2px 20px 0px #5c59598f; */
     width: 450px;
@@ -57,7 +57,7 @@ body{
 
 .task{
     overflow: hidden;
-    border-bottom: 1px solid #2421041c;
+    border-bottom: 1px solid #b1a6c3;
     transition-duration: 1s;
     min-height: 50px;
     max-height: 150px;
@@ -141,7 +141,7 @@ body{
 }
 .save{
     box-sizing: border-box;
-    border: 1.5px solid #4CAF50;
+    border: 1.5px solid #563d7c;
     cursor: pointer;
     width: 75px;
     height: 30px;
@@ -154,13 +154,13 @@ body{
     background-size: cover;
     display: none;
     left: 12px;
-    color: #10a810;
+    color: #563d7c;
     padding: 0px;
     border-radius: 0;
 }
 
-.save:hover{ 
-    background: #10a810;  
+.save:hover{
+    background: #563d7c;
     color: white;
 }
 #addtask{
@@ -170,7 +170,7 @@ body{
     border-radius: 5px;
     /* border: .01em solid #ffff; */
     text-align: center;
-    line-height: 50px;
+    line-height: 45px;
     background: #563d7c;
     color: white;
     position: relative;
@@ -197,21 +197,21 @@ body{
 }
 #editedText:focus{
     width: 250px;
-    margin-left: 10px;
+    /* margin-left: 10px; */
     border-radius: 0px;
     /* border: .1em solid orange; */
 }
 
 #clickToAdd{
     display: inline-block;
-    font-family: cursive;
-    border: .1em solid #aaaaaa38;
-    border-bottom: 1px solid #aaa;
-    padding: 1px 5px;
-    background: #a2d3b221;
+    font-family: verdana;
+    border: .1em solid #563d7c;
+    /* border-bottom: 1px solid #aaa; */
+    padding: 6px 30px;
+    /* background: #a2d3b221; */
     border-radius: 15px;
-    font-size: 15px;
-    color: #938b00;
+    font-size: 13px;
+    color: #563d7c;
 }
 
 #loginContainer{

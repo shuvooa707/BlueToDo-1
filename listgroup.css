@@ -52,7 +52,7 @@
     margin-top: -12px;
 }
 .list:hover{
-    box-shadow:inset 0px 0px 10px #aaa;
+    box-shadow: inset 0px 0px 10px #563d7c69;
     background: #eee;
 }
 .selected{
@@ -99,7 +99,7 @@
 }
 .save_list{
     box-sizing: border-box;
-    border: 1.5px solid #4CAF50;
+    border: 1.5px solid #563d7c;
     cursor: pointer;
     width: 75px;
     height: 30px;
@@ -114,10 +114,10 @@
     /* position: fixed; */
     /* right: 25px; */
     left: 12px;
-    color: #10a810;
+    color: #563d7c;
 }
 .save_list:hover{
-    background:#10a810;
+    background: #563d7c;
     color:white;
 }
 
@@ -125,7 +125,7 @@
     width: 180px;
     margin-left: 10px;
     border-radius: 15px;
-    border: .2em solid #00b213;
+    border: .2em solid #563d7c;
     transition-duration: .2s;
     padding: 7px 10px;
     color: #515151;
@@ -136,7 +136,6 @@
 #editedTextList:focus{
     width: 180px;
     margin-left: 10px;
-    border: .2em solid orange;
     border-radius: 0px;
     transition-duration: .2s;
 }
@@ -166,7 +165,7 @@
     margin-left: -10px;
     border-radius: 15px;
     /* border: .1em solid yellow; */
-    outline: .03em solid green;
+    outline: .03em solid #563d7c;
     transition-duration: .2s;
     padding: 5px 10px;
     color: #515151;
@@ -179,17 +178,13 @@
 }
 
 #clickToAddlist{
-    color: #1b3d20c9;
     display: inline-block;
-    font-family: cursive;
-    border: .1em solid #aaaaaa38;
-    padding: 1px 5px;
-    /* width: 100px; */
-    background: #a2d3b221;
+    font-family: verdana;
+    border: .1em solid #563d7c;
+    padding: 3px 24px;
     border-radius: 15px;
-    /* height: 20px; */
-    font-size: 15px;
-    color: #014901;
+    font-size: 14px;
+    color: #563d7c;
 }
 
 .numberTagList{
