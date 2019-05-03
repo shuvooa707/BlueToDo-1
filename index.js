@@ -137,6 +137,11 @@ function onStartUp(){
                         renderlistgroup(data.split("::listafter::")[0]);
                         render(data.split("::listafter::")[1]);
                         console.log(data.split("::listafter::")[1]);
+                        // changing the header of the task list
+                        var selectedList = document.querySelector(".selected");
+                        if( selectedList ){
+                            document.querySelector("#header").innerText = selectedList.querySelector(".list_name").innerText;
+                        }
                     } else {
                         // if something goes worng then prints it on console window
                         console.log(data);

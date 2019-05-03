@@ -25,6 +25,14 @@
         $result = $conn->query($sql);
         
     } 
+    elseif ($_POST["op"] == "modify") {
+        $oldlistname = $_POST["listname"];
+        $newlistname = $_POST["newlistname"];
+        $primary_key = $_POST["primary_key"];
+        $sql = "UPDATE `list` SET `list_name`='$newlistname' WHERE `primary_key`='$primary_key'";        
+        $result = $conn->query($sql);
+        
+    } 
     else {
         echo "work bitch work";
     }

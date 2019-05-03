@@ -1,5 +1,8 @@
 newList = "";
 totalList = 0;
+var delete_or_modify = 0;
+var before_edited_old_primary_key;
+var oldListName;
 function createnewList(){
     newList = document.querySelector("#fnode");
     newList.innerHTML = `<div class="list">
@@ -68,9 +71,12 @@ function editList(elem){
     var list = elem.parentElement;
     var listName = list.querySelector(".list_name").innerText;
     // checks if the list name is newly created or old and to be modified
-    if( listName.length > 1 ){
-        removeOldList(elem.parentElement);
+    if( listName.length > 0 ){
+        delete_or_modify = 1;
         totalList = 0;
+        oldListName = listName;
+        console.log("editList :1:"+parseInt(list.querySelector(".list_name").getAttributeNode("data-primary-key").value));
+        before_edited_old_primary_key = parseInt(list.querySelector(".list_name").getAttributeNode("data-primary-key").value);
     }
     list.querySelector(".edit_list").style.display = "none";
     list.querySelector(".delete_list").style.display = "none";
@@ -113,19 +119,26 @@ function saveList(elem){
     list.querySelector(".save_list").style.display = "none";
     list.querySelector(".numberTagList").style.display = "block";
 
-
     //setting a new key to data-primary-key attribute
     var all_list = document.querySelectorAll(".list");
     var newly_created_list = list;
     var list_name_of  = newly_created_list.querySelector(".list_name");
     var new_data_attribute = document.createAttribute("data-primary-key");
     var new_onlick_attribute = document.createAttribute("onclick");
-    new_data_attribute.value = new_key(list_name_of.innerText);
     new_onlick_attribute.value = "updateList(this)";
-    list_name_of.setAttributeNode(new_data_attribute);
     list_name_of.setAttributeNode(new_onlick_attribute);
 
-    updateOnlineList("save",newly_created_list);    
+    // if its a newly created list
+    if( delete_or_modify == 0 ){
+        new_data_attribute.value = new_key(list_name_of.innerText);
+        list_name_of.setAttributeNode(new_data_attribute);
+        updateOnlineList("save",newly_created_list);    
+    // if it's a old list
+    } else{
+        new_data_attribute.value = before_edited_old_primary_key;
+        list_name_of.setAttributeNode(new_data_attribute);
+        modifyOldList("modify",elem);
+    }
 }
 
 
@@ -165,13 +178,13 @@ function renderlistgroup(data){
     return 1;
 }
 
-function removeOldList( elem ) {
+function modifyOldList( operation,elem ) {
     totalList = 0;
     var p = elem.parentElement;
     var listName = p.querySelector(".list_name");
-    console.log(elem);
-    var primary_key = get_primary_key( elem );
-    data = `op=delete&listname=${listName.innerText}&primary_key=${primary_key}`;
+    var primary_key = get_primary_key( elem.parentElement );
+    var sql = `op=${operation}&oldlistname=${oldListName}&newlistname=${listName.innerText}&primary_key=${primary_key}`;
+    console.log(sql);
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
@@ -185,7 +198,7 @@ function removeOldList( elem ) {
     };
     xmlhttp.open("POST", "updateListData.php", true);
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.send(data);
+    xmlhttp.send(sql);
 }
 
 
