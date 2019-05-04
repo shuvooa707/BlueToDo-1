@@ -1,8 +1,11 @@
-newList = "";
-totalList = 0;
+/**************************
+  * Remember Folks GLOBAL *
+  *  ~Veriables Are Evil~   *
+  **************************/
+
+var newList = "";
+var totalList = 0;
 var delete_or_modify = 0;
-var before_edited_old_primary_key;
-var oldListName;
 function createnewList(){
     newList = document.querySelector("#fnode");
     newList.innerHTML = `<div class="list">
@@ -19,8 +22,10 @@ function createnewList(){
 }
 
 
-
+// This function *Create new div.list element and returns back*
 function addnewlist(nodeToBeAdded){
+    // onpageload this if block takes the list that are in 
+    // database and puts them in div#list_container element
     if(nodeToBeAdded){
         document.querySelector("#list_container").appendChild(nodeToBeAdded);
     }
@@ -61,7 +66,6 @@ function deleteList(elem){
         console.log(elem + "Deleted ");
     }
     // Clearing the task container
-    //console.log( "from deleted" + elem );
     if(elem.parentElement.classList.contains("selected")){
         document.querySelector("#task_container").innerHTML="";
     }
@@ -152,9 +156,9 @@ function renderlistgroup(data){
     }
     data = JSON.parse(data);
     // Pushing the data to DOM
-    //console.log(data[0].is_selected);
+    // console.log(data[0].is_selected);
 
-    data.forEach((element,index) => {
+    data.forEach((element) => {
         if( parseInt(element.is_selected) ){
             selected = "selected";
         } else {
@@ -183,7 +187,7 @@ function modifyOldList( operation,elem ) {
     var p = elem.parentElement;
     var listName = p.querySelector(".list_name");
     var primary_key = get_primary_key( elem.parentElement );
-    var sql = `op=${operation}&oldlistname=${oldListName}&newlistname=${listName.innerText}&primary_key=${primary_key}`;
+    var sql = `op=${operation}&newlistname=${listName.innerText}&primary_key=${primary_key}`;
     console.log(sql);
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
@@ -206,7 +210,7 @@ function modifyOldList( operation,elem ) {
 // Updates tasks on click on any list
 function updateList( node ){
     totalTask = 0;
-    console.log("updateList function has been called ");
+    console.log(" updateList() function has been invoked ");
     document.querySelector("#task_container").innerHTML="";
     var primary_key = get_primary_key(node.parentElement);
     console.log(primary_key);
@@ -214,10 +218,10 @@ function updateList( node ){
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             if(xmlhttp.responseText){
-                data = xmlhttp.responseText;
-                data = data.split("::listafter::")[0];
+               var tasks = xmlhttp.responseText;
+               tasks = tasks.split("::listafter::")[0];
                 changeSelectedHighlight( node );
-                render(data);
+                render(tasks);
                 // changing the header of the task list
                 document.querySelector("#header").innerText = node.innerText;
             }

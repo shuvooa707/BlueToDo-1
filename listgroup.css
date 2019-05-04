@@ -26,6 +26,7 @@
     text-align: center;
 }
 .list_name{
+    border-left: 1px solid #bbb;
     font-weight: 500;
     font-size: 17px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -39,7 +40,7 @@
     overflow: hidden;
 }
 .list{
-    height: 50px;
+    height: 47px;
     overflow: hidden;
     /* width: 100%; */
     /* margin-bottom: 10px; */
@@ -193,7 +194,7 @@
     cursor: pointer;
     width: 20px;
     height: 20px;
-    margin: 12px 5px;
+    margin: 12px 9px;
     text-align: center;
     line-height: 20px;
     display: block;

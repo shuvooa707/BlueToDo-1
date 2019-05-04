@@ -57,18 +57,20 @@ body{
 
 .task{
     overflow: hidden;
-    border-bottom: 1px solid #b1a6c3;
+    border-bottom: 1px solid #bbbbbb40;
     transition-duration: 1s;
-    min-height: 50px;
+    /* min-height: 44px; */
+    height: 44px;
     max-height: 150px;
 }
 .task:last-child {
     border-bottom: 0;
 }
 .done{
-    padding: 10px;
+    padding: 15px 10px;
     display: inline-block;
-    /* border: 2px solid #626262; */
+    border-left: 1px solid #bbbbbb40;
+    border-right: 1px solid #bbbbbb40;
     margin: 0px;
 }
 .task_name{
@@ -92,7 +94,7 @@ body{
     cursor: pointer;
     width: 20px;
     height: 20px;
-    margin: 12px 5px;
+    margin: 9px 5px;
     text-align: center;
     line-height: 20px;
     display: block;
@@ -106,7 +108,7 @@ body{
     cursor: pointer;
     width: 18px;
     height: 17px;
-    margin: 15px 10px;
+    margin: 12px 10px;
     display: inline-block;
     float: right;
     background: url(img/edit2.png);
@@ -273,7 +275,7 @@ button{
 }
 /* making the check box 70% bigger */
 input[type="checkbox"]{
-    transform: scale(1.7);
+    transform: scale(2);
 }
 
 #massage{

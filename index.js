@@ -34,7 +34,7 @@ function completed(elem){
     }
 }
 
-
+var animatorTime = 1;
 function addnew(nodeToBeAdded){
     // If no List Selected 
     var all_list = document.querySelector(".list");
@@ -43,8 +43,12 @@ function addnew(nodeToBeAdded){
         return 0;
     }
     if(nodeToBeAdded){
-        newTask = nodeToBeAdded;
-        document.querySelector("#task_container").appendChild(newTask);
+        nodeToBeAdded.style.transitionDuration = ".5s";
+        nodeToBeAdded.style.opacity = "0";
+        setTimeout(()=>{
+            nodeToBeAdded.style.opacity = "1";
+        },(animatorTime++)*90);
+        document.querySelector("#task_container").appendChild(nodeToBeAdded);
     }
     else {            
         createNewTask();   
@@ -204,7 +208,8 @@ function render(tasks){
             tmp_task.querySelector(".edit_task").style.display = "none";
         }
         document.querySelector("#fnode").innerHTML = "";
-    });    
+    });   
+    animatorTime = 0; 
 }
 
 // This function is used to update data on database like:-
