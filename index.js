@@ -9,7 +9,7 @@ function createNewTask(){
                                 <input type="checkbox" onclick="completed(this)">
                             </span>
                             <span class="numberTagTask">${++totalTask}</span>
-                            <span class="task_name"></span>
+                            <span class="task_name" onclick="precompleted(this)"></span>
                             <span class="delete_task" title="Delete Task Name" onclick="deleteTask(this)"></span>
                             <span class="edit_task"  title="Edit Task Name" onclick="editTask(this)"></span>                
                             <span class="save" title="Click To Save" onclick="save(this)">Save</span>                
@@ -19,6 +19,9 @@ function createNewTask(){
     newTask = newTask.querySelector(".task");
     document.querySelector("#fnode").innerHTML = "";
     return newTask;
+}
+function precompleted( elem ) {
+    elem.parentElement.querySelector("input[type='checkbox']").click();
 }
 function completed(elem){
     var r = elem.parentElement.parentElement.getElementsByClassName("task_name")[0];
@@ -184,10 +187,10 @@ function render(tasks){
     tasks.forEach((element,index,self) => {
         if(element["status"]=="done"){
             status = "checked";
-            tname = `<span class="task_name"><del class='fuzzy'>${element["taskname"]}</del></span>`;
+            tname = `<span class="task_name" onclick="precompleted(this)"><del class='fuzzy'>${element["taskname"]}</del></span>`;
         } else {
             status = "";
-            tname = `<span class="task_name">${element["taskname"]}</span>`;
+            tname = `<span class="task_name" onclick="precompleted(this)">${element["taskname"]}</span>`;
         }
         var tmp_task = `<div class="task">
                             <span class="done">

@@ -44,8 +44,8 @@
 </head>
 <body >
 
-    <div id="nav">
-            <span><a href="index.php">Task Page</a></span>
+    <div id="nav" >
+            <span  onclick='window.location=index.php'><a href="index.php">Task Page</a></span>
             <span id="signout" onclick="signout()">Sign Out</span>
     </div>
 

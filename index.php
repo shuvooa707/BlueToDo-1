@@ -25,7 +25,7 @@
 <body >
 
     <div id="nav">
-            <span><a href="user.php" title="Click to See Your Profile Page"><?php echo $_SESSION["uname"]; ?></a></span>
+            <span  onclick='window.location=user.php'><a href="user.php" title="Click to See Your Profile Page"><?php echo $_SESSION["uname"]; ?></a></span>
             <span id="signout" title="Click to Logout" onclick="signout()">Sign Out</span>
     </div>
 

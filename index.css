@@ -1,3 +1,34 @@
+:root{
+    --indigo: #6610f2;
+    --blue:#007bff;
+    --indigo:#6610f2;
+    --purple:#6f42c1;
+    --pink:#e83e8c;
+    --red:#dc3545;
+    --orange:#fd7e14;
+    --yellow:#ffc107;
+    --green:#28a745;
+    --teal:#20c997;
+    --cyan:#17a2b8;
+    --white:#fff;
+    --gray:#6c757d;
+    --gray-dark:#343a40;
+    --primary:#007bff;
+    --secondary:#6c757d;
+    --success:#28a745;
+    --info:#17a2b8;
+    --warning:#ffc107;
+    --danger:#dc3545;
+    --light:#f8f9fa;
+    --dark:#343a40;
+    --breakpoint-xs:0;
+    --breakpoint-sm:576px;
+    --breakpoint-md:768px;
+    --breakpoint-lg:992px;
+    --breakpoint-xl:1200px;
+
+    --color:#34195e;
+}
 *{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     transition-duration: .2s;
@@ -26,7 +57,7 @@ body{
 
 #container{
     margin-bottom: 50px;
-    border: .1em solid #563d7c75;
+    border: .1em solid #563d7c;
     /* border-radius: 10px; */
     /* box-shadow: inset 0px 2px 20px 0px #5c59598f; */
     width: 450px;
@@ -41,7 +72,7 @@ body{
 }
 #header{
     width: 100%;
-    background: #563d7c;
+    background: var(--color);
     padding: 15px 0px;
     position: relative;
     margin: 0px;
@@ -59,26 +90,27 @@ body{
     overflow: hidden;
     border-bottom: 1px solid #bbbbbb40;
     transition-duration: 1s;
-    /* min-height: 44px; */
-    height: 44px;
+    min-height: 44px;
+    /* height: 44px; */
     max-height: 150px;
 }
 .task:last-child {
     border-bottom: 0;
 }
 .done{
-    padding: 15px 10px;
+    padding: 10px 10px;
+    /* box-sizing: border-box; */
     display: inline-block;
-    border-left: 1px solid #bbbbbb40;
-    border-right: 1px solid #bbbbbb40;
-    margin: 0px;
+    /* border-left: 1px solid #bbbbbb40; */
+    /* border-right: 1px solid #bbbbbb40; */
+    margin: 4px;
 }
 .task_name{
     font-size: 16px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-align: center;
     display: inline-block;
-    margin: 15px 10px;
+    margin: 5px 10px;
     max-width: 260px;
     height: auto;
     cursor: pointer;
@@ -90,7 +122,7 @@ body{
     filter:blur(1px);
 }
 .numberTagTask{
-    border: .03em solid #563d7c;
+    /* border: .03em solid var(--color); */
     cursor: pointer;
     width: 20px;
     height: 20px;
@@ -99,10 +131,10 @@ body{
     line-height: 20px;
     display: block;
     float: left;
-    background: #563d7c;
+    background: var(--color);
     color: white;
     border-radius: 2px;
-    box-shadow: 1px 1px 1px #563d7c99;
+    /* box-shadow: 1px 1px 1px var(--color)99; */
 }
 .edit_task{
     cursor: pointer;
@@ -143,7 +175,7 @@ body{
 }
 .save{
     box-sizing: border-box;
-    border: 1.5px solid #563d7c;
+    border: 1.5px solid var(--color);
     cursor: pointer;
     width: 75px;
     height: 30px;
@@ -156,13 +188,13 @@ body{
     background-size: cover;
     display: none;
     left: 12px;
-    color: #563d7c;
+    color: var(--color);
     padding: 0px;
     border-radius: 0;
 }
 
 .save:hover{
-    background: #563d7c;
+    background: var(--color);
     color: white;
 }
 #addtask{
@@ -173,7 +205,7 @@ body{
     /* border: .01em solid #ffff; */
     text-align: center;
     line-height: 45px;
-    background: #563d7c;
+    background: var(--color);
     color: white;
     position: relative;
     margin: 24px 12px;
@@ -183,7 +215,7 @@ body{
     display: inline-block;
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
-#addlist:hover,#addtask:hover {color: #563d7c;background: white;}
+#addlist:hover,#addtask:hover {color: var(--color);background: white;}
 
 #editedText{
     width: 250px;
@@ -205,20 +237,20 @@ body{
 #clickToAdd{
     display: inline-block;
     font-family: verdana;
-    border: .1em solid #563d7c;
+    border: .1em solid var(--color);
     /* border-bottom: 1px solid #aaa; */
     padding: 6px 30px;
     /* background: #a2d3b221; */
     border-radius: 15px;
     font-size: 13px;
-    color: #563d7c;
+    color: var(--color);
 }
 
 #loginContainer{
     box-shadow: 1px 1px solid #aaa;
     border: .1em solid #a2a2a22e;
     display: inline-block;
-    background: #563d7c;
+    background: var(--color);
     position: absolute;
     top: 50%;
     left: 50%;
@@ -231,7 +263,7 @@ body{
 #userName{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 15px;
-    color: #563d7c;
+    color: var(--color);
     width: 250px;
     /* border-radius: 20px; */
     border: 0px;
@@ -261,7 +293,7 @@ label{
     color: white;
 }
 button{
-    color: #563d7c;
+    color: var(--color);
     padding: 10px 43px;
     /* background: yellow; */
     border: 0px;
