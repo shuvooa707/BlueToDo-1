@@ -138,12 +138,11 @@ body{
 }
 .edit_task{
     cursor: pointer;
-    width: 18px;
-    height: 17px;
+    width: 22px;
+    height: 22px;
     margin: 12px 10px;
     display: inline-block;
     float: right;
-    background: url(img/edit2.png);
     background-size: contain;
     position: relative;
     opacity:.5;
@@ -155,12 +154,11 @@ body{
 }
 .delete_task{
     cursor: pointer;
-    width: 18px;
-    height: 18px;
+    width: 22px;
+    height: 22px;
     margin: 15px 10px;
     display: inline-block;
     float: right;
-    background: url(img/delete.png);
     background-size: cover;
     position: relative;
     right: 0px;
