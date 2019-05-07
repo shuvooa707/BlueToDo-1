@@ -301,14 +301,10 @@ function changeSelectedHighlight( node ){
     selected = node.parentElement.querySelector(".edit_list");
     all_list.forEach((elem,index)=>{
         elem.classList.remove("selected");
-        elem.querySelector(".edit_list").style.background = "url('img/edit2.png')";
-        elem.querySelector(".edit_list").style.backgroundSize = "contain";
         elem.querySelector(".numberTagList").style.background = "white";
         elem.querySelector(".numberTagList").style.color = "#563d7c";
     });     
     node.parentElement.classList.add("selected");
-    selected.style.background = "url('img/icons.png')";
-    selected.style.backgroundSize = "contain";
     document.querySelector(".selected").querySelector(".numberTagList").style.background = "#563d7c";
     document.querySelector(".selected").querySelector(".numberTagList").style.color = "white";
 }

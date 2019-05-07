@@ -62,6 +62,8 @@ body{
     /* box-shadow: inset 0px 2px 20px 0px #5c59598f; */
     width: 450px;
     min-height: 130px;
+    max-height: 80vh;
+    overflow-y: auto;
     background: #ffffff;
     position: relative;
     float: left;
@@ -74,7 +76,8 @@ body{
     width: 100%;
     background: var(--color);
     padding: 15px 0px;
-    position: relative;
+    position: sticky;
+    z-index: 100;
     margin: 0px;
     top: -2px;
     font-size: x-large;
@@ -122,19 +125,19 @@ body{
     filter:blur(1px);
 }
 .numberTagTask{
-    /* border: .03em solid var(--color); */
+    border: .03em solid #563d7c;
     cursor: pointer;
-    width: 20px;
-    height: 20px;
-    margin: 9px 5px;
+    width: 24px;
+    height: 21px;
+    margin: 12px 9px;
     text-align: center;
     line-height: 20px;
     display: block;
     float: left;
-    background: var(--color);
-    color: white;
+    background: #34195e;
+    color: #ffffff;
     border-radius: 2px;
-    /* box-shadow: 1px 1px 1px var(--color)99; */
+    box-shadow: 1px 1px 1px #563d7cab;
 }
 .edit_task{
     cursor: pointer;
@@ -205,7 +208,7 @@ body{
     line-height: 45px;
     background: var(--color);
     color: white;
-    position: relative;
+    position: sticky;
     margin: 24px 12px;
     font-size: 57px;
     font-weight: bold;
