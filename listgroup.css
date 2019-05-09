@@ -53,6 +53,7 @@
     margin-top: -12px;
 }
 .list:hover{
+    cursor: pointer;
     box-shadow: 0px 0px 10px #0000006b;
     background: #eee9;
 }
@@ -159,20 +160,20 @@
 }
 
 #editedText{
-    width: 250px;
-    margin-top: 5px;
+    width: 236px;
+    margin-top: 1px;
     margin-left: -10px;
     border-radius: 15px;
     border: 0px;
     /* border: .1em solid yellow; */
     outline: .03em solid #563d7c;
     transition-duration: .2s;
-    padding: 5px 10px;
+    padding: 6px 10px;
     color: #515151;
     font-weight: 700;
 }
 #editedText:focus{
-    width: 250px;
+    width: 236px;
     /* border-radius: 0px; */
     /* border: .1em solid orange; */
 }

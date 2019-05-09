@@ -312,6 +312,33 @@ function signout() {
 
 window.onload = function(){          
         onStartUp();
+        setTimeout(()=>{
+            document.querySelectorAll(".list").forEach( (list)=>{
+                list.addEventListener("click",(e)=>{
+                    var flag = "listonly";
+                    e.path.forEach((elem)=>{
+                        if ( elem.className == "edit_list" ) {
+                            flag = "editlist";
+                        } else if ( elem.className == "delete_list" ) {
+                            flag = "deletelist";
+                        } else if ( elem.className == "save_list" ) {
+                            flag = "savelist";
+                        }
+                    });
+                    if ( flag == "editlist" ){
+                        console.log(" %cEdit  ","color:purple");
+                    } else if( flag == "deletelist" ) {
+                        console.log(" %cDelete  ","color:red");
+                    } else if ( flag == "savelist" ) {		
+                        console.log(" %c Save  ","color:green");
+                    } else {
+                        console.log(" List ");
+                        updateList(list.querySelector(".list_name"));
+                    }
+            
+                });
+            
+            })},10);
 
 };
 

@@ -28,6 +28,15 @@
             window.location = "signup.php";
         }
     </script>
+    <style type="text/css">
+        body{
+            background:url("img/login-page-bg.jpg");
+            background-size:cover;
+        }
+        #loginContainer{
+            border-radius:0px;
+        }
+    </style>
 </head>
 <body>
     <div id="loginContainer">
