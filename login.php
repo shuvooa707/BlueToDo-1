@@ -29,9 +29,10 @@
         }
     </script>
     <style type="text/css">
-        body{
+        body{            
             background:url("img/login-page-bg.jpg");
-            background-size:cover;
+            background-size:100vw 100vh;
+            background-repeat:no-repeat;
         }
         #loginContainer{
             border-radius:0px;
@@ -39,15 +40,17 @@
     </style>
 </head>
 <body>
-    <div id="loginContainer">
-        <div>
-            <label for="User Name"> Login : </label>
-            <input type="text" name="User Name" id="userName">
-            <label for="password">Password : </label>
-            <input type="password" name="Password" id="password">
-            <button onclick="login()">Login</button>
-            <button onclick="signup()">Sign up</button>
-            <label for="userMatch" id="massage"></label>
+    <div id="body">
+        <div id="loginContainer">
+            <div>
+                <label for="User Name"> Login : </label>
+                <input type="text" name="User Name" id="userName">
+                <label for="password">Password : </label>
+                <input type="password" name="Password" id="password">
+                <button onclick="login()">Login</button>
+                <button onclick="signup()">Sign up</button>
+                <label for="userMatch" id="massage"></label>
+            </div>
         </div>
     </div>
     <script src="modalbox.js"></script>

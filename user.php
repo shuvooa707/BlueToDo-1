@@ -16,7 +16,6 @@
     <link rel="stylesheet" type="text/css" media="screen" href="navbar.css">
     <link rel="stylesheet" type="text/css" media="screen" href="user.css">
     <link rel="stylesheet" type="text/css" media="screen" href="modal.css">
-    <script src="index.js"></script>
     <script>
         function deleteAccount(params) {
             var validation = confirm("Are You Sure You Want to Delete This Account ???");
@@ -40,12 +39,17 @@
                 xmlhttp.send(data);
             }
         }
+
+        function signout() {
+            window.location = "signout.php";
+        }
     </script>
 </head>
 <body >
 
+    <img src="img/login-page-bg.jpg" id="backgroundImage">
     <div id="nav" >
-            <span  onclick='window.location=index.php'><a href="index.php">Task Page</a></span>
+            <span  onclick='window.location="index.php"'><a href="index.php">Task Page</a></span>
             <span id="signout" onclick="signout()">Sign Out</span>
     </div>
 

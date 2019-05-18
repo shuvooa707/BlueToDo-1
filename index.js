@@ -28,6 +28,7 @@ function precompleted( elem ) {
     elem.parentElement.querySelector("input[type='checkbox']").click();
 }
 function completed(elem){
+    console.trace();
     var r = elem.parentElement.parentElement.getElementsByClassName("task_name")[0];
     if( elem.checked ){
         console.log(elem.value);
@@ -78,22 +79,27 @@ function deleteTask(elem){
     elem.parentElement.style.border="0"; 
     elem.parentElement.style.marginBottom="0"; 
     elem.parentElement.style.padding="0"; 
+
+    if (elem.parentElement.querySelector(".task_name") && elem.parentElement.querySelector(".task_name").innerText.length > 0) {
+        updateOnline("delete",elem.parentElement);
+    }
+
     setTimeout( ()=>{
         elem.parentElement.remove();
     },900);
-    updateOnline("delete",elem.parentElement);
-
 }
 
 function editTask(elem){
-    var p = elem.parentElement;
-    var taskName = p.querySelector(".task_name");
+    var task = elem.parentElement;
+    var taskName = task.querySelector(".task_name");
     var taskValue = taskName.innerText;
-    removeOld(p);
-    p.querySelector(".edit_task").style.display = "none";
-    p.querySelector(".delete_task").style.display = "none";
-    p.querySelector(".save").style.display = "inline-block";
-    p.querySelector("input").style.visibility = "hidden";
+    if( taskValue.length > 0 ){
+        removeOld(task);
+    }
+    task.querySelector(".edit_task").style.display = "none";
+    task.querySelector(".delete_task").style.display = "none";
+    task.querySelector(".save").style.display = "inline-block";
+    task.querySelector("input").style.visibility = "hidden";
 
 
     // creating a new input field and putting it on for getting new task name 
@@ -113,23 +119,32 @@ function editTask(elem){
 
 
 function save(elem){
+
+    // If there is no text entered in other words
+    // if the no input is given
     var p = elem.parentElement;
     var editedText = p.querySelector("#editedText");
+    if(editedText.value.length < 1){
+        console.log("dsfjng kjsefsd");
+        deleteTask(elem);
+        return 0;
+    }
     var span = document.createElement("span");
     var Class = document.createAttribute("class");
+    var onclick = document.createAttribute("onclick");
     Class.value = "task_name";
+    onclick.value = "precompleted(this)";
     span.setAttributeNode(Class);
+    span.setAttributeNode(onclick);
     span.innerText = editedText.value; ///.substr(0,35);
     editedText.replaceWith(span);
     p.querySelector(".edit_task").style.display = "inline-block";
     p.querySelector(".delete_task").style.display = "inline-block";
     p.querySelector("input").style.visibility = "visible";
     p.querySelector(".save").style.display = "none";
-    if(editedText.value.length < 1){
-        deleteTask(elem);
-    } else {
-        updateOnline("save",elem.parentElement);
-    }
+
+    updateOnline("save",elem.parentElement);
+    
 }
 
 // This function fetches data from database after page loading 
@@ -145,7 +160,9 @@ function onStartUp(){
                         tmp = tmp.split("::listafter::")[0];
                         renderlistgroup( tmp );
                     } else if( data.includes("list_name") && data.includes("::listafter::") ) {
+                        // construct DOM of Lists
                         renderlistgroup(data.split("::listafter::")[0]);
+                        // construct DOM of Tasks
                         render(data.split("::listafter::")[1]);
                         console.log(data.split("::listafter::")[1]);
                         // changing the header of the task list
@@ -168,7 +185,7 @@ function onStartUp(){
     xmlhttp.send();
 }
 
-// This function renders data on the page in other 
+// This function draws data on the page in other 
 // language it draws the data on on page using DOM
 function render(tasks){
     
@@ -227,7 +244,8 @@ function render(tasks){
 // when any list is deleted this funtion is triggered with 
 // the deleted list and operation to do which in case is delete 
 // as parameter. Same goes for renaming of list and creating new list
-function updateOnline(params,elem) {
+function updateOnline(operation,elem) {
+
     // get the primary key of current selected list
     var tmpList = document.querySelector(".selected");
     primary_key = tmpList.querySelector(".list_name").getAttributeNode("data-primary-key").value;
@@ -241,20 +259,20 @@ function updateOnline(params,elem) {
         status = "unfinished";
     }
 
-    if( params == "complete" ){
-        sql_operation = `op=${params}&taskname=${taskName}&status=${status}&primary_key=${primary_key}`;        
-    } else if( params == "unfinished" ){
-        sql_operation = `op=${params}&taskname=${taskName}&status=${status}&primary_key=${primary_key}`;  
+    if( operation == "complete" ){
+        sql_operation = `op=${operation}&taskname=${taskName}&status=${status}&primary_key=${primary_key}`;        
+    } else if( operation == "unfinished" ){
+        sql_operation = `op=${operation}&taskname=${taskName}&status=${status}&primary_key=${primary_key}`;  
 
-    } else if( params == "save" ) {
+    } else if( operation == "save" ) {
         taskName = document.querySelector(".selected");
         taskName = elem.querySelector(".task_name").innerText;
 
-        sql_operation = `op=${params}&taskname=${taskName}&status=${status}&primary_key=${primary_key}`;
+        sql_operation = `op=${operation}&taskname=${taskName}&status=${status}&primary_key=${primary_key}`;
 
-    } else if ( params == "delete" ) {
-        sql_operation = `op=${params}&taskname=${taskName}&primary_key=${primary_key}`;
-    } else if( params =="update" ){
+    } else if ( operation == "delete" ) {
+        sql_operation = `op=${operation}&taskname=${taskName}&primary_key=${primary_key}`;
+    } else if( operation =="update" ){
 
     }
     
@@ -272,10 +290,13 @@ function updateOnline(params,elem) {
     xmlhttp.open("POST", "updateData.php", true);
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlhttp.send(sql_operation);
-    console.log(sql_operation);
+    //console.log(sql_operation);
+    console.trace();
 }
 
-function removeOld(elem) {    
+// removes the old task when that corresponding task is modified
+function removeOld(elem) {
+    console.log("removeOld invoked");    
     // get the current selected list
     let tmpList = document.querySelector(".selected");
     if (!tmpList) {
@@ -306,39 +327,49 @@ function removeOld(elem) {
     xmlhttp.send(sql_operation);
 }
 
+function attachEvents(list) {
+    list.addEventListener("click",(e)=>{
+        var flag = "listonly";
+        e.path.forEach((elem)=>{
+            if ( elem.className == "edit_list" ) {
+                flag = "editlist";
+            } else if ( elem.className == "delete_list" ) {
+                flag = "deletelist";
+            } else if ( elem.className == "save_list" ) {
+                flag = "savelist";
+            }
+        });
+
+        if ( flag == "editlist" ){
+            console.log(" %cEdit  ","color:purple");
+        } else if( flag == "deletelist" ) {
+            console.log(" %cDelete  ","color:red");
+        } else if ( flag == "savelist" ) {		
+            console.log(" %c Save  ","color:green");
+        } else {
+            console.log(" List ");
+            updateList(list.querySelector(".list_name"));
+        }
+    });
+    
+}
+// this function pauses the moving animation on being clicked 
+function playNpause(node){
+    if(node.style.animationPlayState =="" || node.style.animationPlayState=="running"){
+        node.style.animationPlayState = "paused";
+    } else {
+        node.style.animationPlayState = "running";
+    }
+}
+
+
 function signout() {
     window.location = "signout.php";
 }
 
 window.onload = function(){          
         onStartUp();
-        setTimeout(()=>{
-            document.querySelectorAll(".list").forEach( (list)=>{
-                list.addEventListener("click",(e)=>{
-                    var flag = "listonly";
-                    e.path.forEach((elem)=>{
-                        if ( elem.className == "edit_list" ) {
-                            flag = "editlist";
-                        } else if ( elem.className == "delete_list" ) {
-                            flag = "deletelist";
-                        } else if ( elem.className == "save_list" ) {
-                            flag = "savelist";
-                        }
-                    });
-                    if ( flag == "editlist" ){
-                        console.log(" %cEdit  ","color:purple");
-                    } else if( flag == "deletelist" ) {
-                        console.log(" %cDelete  ","color:red");
-                    } else if ( flag == "savelist" ) {		
-                        console.log(" %c Save  ","color:green");
-                    } else {
-                        console.log(" List ");
-                        updateList(list.querySelector(".list_name"));
-                    }
-            
-                });
-            
-            })},10);
+        //attachEvents();
 
 };
 

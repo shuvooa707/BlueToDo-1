@@ -1,20 +1,22 @@
 #listgroup-container{
-    border: .1em solid #00000030;
+    border: .1em solid #563d7c;
     /* border-radius: 10px; */
     /* box-shadow: inset 0px 2px 20px 0px #5c59598f; */
-    width: 350px;
+    min-width: 400px;
+    width: auto;
     min-height: 130px;
     background: #ffffff;
     position: relative;
     float:left;
     top: 100px;
     /* padding: 10px; */
-    margin-left: 180px;
+    margin-left: 50px;
     margin-bottom: 20px;
     padding-top: 10px;
+    overflow-x: hidden;
 }
 #list-container-header{
-    width: 353px;
+    width: 102%;
     background: #563d7c;
     padding: 15px 0px;
     position: relative;
@@ -40,7 +42,7 @@
     overflow: hidden;
 }
 .list{
-    height: 47px;
+    height: auto;
     overflow: hidden;
     /* width: 100%; */
     /* margin-bottom: 10px; */
@@ -170,7 +172,8 @@
     transition-duration: .2s;
     padding: 6px 10px;
     color: #515151;
-    font-weight: 700;
+    /* font-weight: 700; */
+    font-family: verdana;
 }
 #editedText:focus{
     width: 236px;

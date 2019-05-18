@@ -35,7 +35,19 @@
     color: rgba(0, 0, 0, 0.82);
 } 
 body{
+    overflow: auto;
 }
+/* ----- background image styling ----- */
+img#backgroundImage{
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    z-index: -100;
+}
+
 #userPlate{
     width : 180px;
     height: 100px;
@@ -69,7 +81,7 @@ body{
     float: left;
     top: 100px;
     /* padding: 10px; */
-    margin-left: 100px;
+    margin-left: 30px;
     transition-duration: 1s;
 }
 #header{
@@ -226,7 +238,7 @@ body{
     transition-duration: .2s;
     padding: 5px 10px;
     color: #515151;
-    font-weight: 700;
+    /* font-weight: 700; */
 }
 #editedText:focus{
     width: 250px;
@@ -319,7 +331,7 @@ input[type="checkbox"]{
     animation-duration: 5s;
     animation-iteration-count: infinite;
     animation-timing-function: ease;
-    animation-timing-function: ease-out;
+    animation-timing-function: cubic-bezier(0.59, 0.15, 0.43, 0.84);
 }
 @keyframes example {
     0%   {margin-left: 0px;}
@@ -328,10 +340,10 @@ input[type="checkbox"]{
 }
 .animate2{
     animation-name: example2;
-    animation-duration: 5s;
+    animation-duration: 2s;
     animation-iteration-count: infinite;
     animation-timing-function: ease;
-    animation-timing-function: ease-out;
+    animation-timing-function: cubic-bezier(0.59, 0.15, 0.43, 0.84);
 }
 @keyframes example2 {
     0%   {margin-left: 25px;}

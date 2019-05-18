@@ -17,15 +17,12 @@
     <link rel="stylesheet" type="text/css" media="screen" href="navbar.css">
     <link rel="stylesheet" type="text/css" media="screen" href="listgroup.css">
     <link rel="stylesheet" type="text/css" media="screen" href="modal.css">
-    <script src="index.js"></script>
-    <script src="listgroup.js"></script>
-    <script src="modalbox.js"></script>
     
 </head>
 <body >
-
+    <img src="img/login-page-bg.jpg"  id="backgroundImage">
     <div id="nav">
-            <span  onclick='window.location=user.php'><a href="user.php" title="Click to See Your Profile Page"><?php echo $_SESSION["uname"]; ?></a></span>
+            <span  onclick='window.location="user.php"'><a href="user.php" title="Click to See Your Profile Page"><?php echo $_SESSION["uname"]; ?></a></span>
             <span id="signout" title="Click to Logout" onclick="signout()">Sign Out</span>
     </div>
 
@@ -39,7 +36,7 @@
         <div id="addlist" title="Click to Add a New Task" onclick="addnewlist()">
             +
         </div>
-        <h4 id="clickToAddlist" class="animate1">Click To Add A New List</h4>
+        <h4 id="clickToAddlist" class="animate1"  onclick="playNpause(this)">Click To Add A New List</h4>
     </div>
     
     <div id="container">
@@ -47,7 +44,7 @@
         <div id="addtask" title="Click to Add a New Task" onclick="addnew()" autofocus>
             +
         </div>
-        <h4 id="clickToAdd" class="animate2">Click To Add A New Task</h4>
+        <h4 id="clickToAdd" class="animate2" onclick="playNpause(this)">Click To Add A New Task</h4>
 
         <div id="task_container">
             
@@ -63,5 +60,9 @@
             <div id="msg"></div>
         </div>
     </div>
+    <!-- scripts goes here -->
+    <script src="listgroup.js"></script>
+    <script src="index.js"></script>
+    <script src="modalbox.js"></script>
 </body>
 </html>

@@ -151,6 +151,7 @@ function saveList(elem){
 
 
 // This function fetches data from database
+// inersts them into the list
 function renderlistgroup(data){
     var data  = `${data}`;
    // console.log(data);
@@ -168,7 +169,7 @@ function renderlistgroup(data){
         } else {
             selected = "";
         }
-        var tmp_task = `<div class="list  ${selected}">
+        var tmp_list = `<div class="list  ${selected}">
                             <span class="numberTagList" onclick="updateList(this.nextElementSibling)">${++totalList}</span>
                             <span class="list_name"  onclick="updateList(this)" data-primary-key="${element['primary_key']}">${element['list_name']}</span>
                             <span class="delete_list" title="Delete Task Name" onclick="deleteList(this)">
@@ -180,11 +181,14 @@ function renderlistgroup(data){
                             <span class="save_list" title="Click To Save" onclick="saveList(this)">Save</span>                
                         </div>`;        
         fnode = document.querySelector("#fnode");
-        fnode.innerHTML = tmp_task;
-        tmp_task = document.querySelector("#fnode");
-        tmp_task = tmp_task.querySelector(".list");
-        addnewlist(tmp_task);
-        
+        fnode.innerHTML = tmp_list;
+        tmp_list = document.querySelector("#fnode");
+        tmp_list = tmp_list.querySelector(".list");
+        // attach onclick event before inserting into the DOM 
+        attachEvents(tmp_list);
+        // calling the addnewlist function which
+        // inserts all the list into the DOM 
+        addnewlist(tmp_list);        
     });    
 
     return 1;
