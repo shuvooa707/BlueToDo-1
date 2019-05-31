@@ -13,10 +13,10 @@ function createNewTask(){
                             <span class="delete_task" title="Delete Task Name" onclick="deleteTask(this)">
                                 <svg viewBox="0 0 24 24" id="ic_delete_24px" width="100%" height="100%"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path></svg>
                             </span>
-                            <span class="edit_task"  title="Edit Task Name" onclick="editTask(this)">
+                            <span class="edit_task"  title="Edit Task Name" onclick="editTask(this,'update')">
                                 <svg viewBox="0 0 24 24" id="ic_edit_24px" width="100%" height="100%"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>
                             </span>                
-                            <span class="save" title="Click To Save" onclick="save(this)">Save</span>                
+                            <span class="save" title="Click To Save" onclick="update(this)">Save</span>                
                         </div>`;
 
     newTask = document.querySelector("#fnode");
@@ -24,14 +24,14 @@ function createNewTask(){
     document.querySelector("#fnode").innerHTML = "";
     return newTask;
 }
+// check the task on being clicked on the name of the task
 function precompleted( elem ) {
     elem.parentElement.querySelector("input[type='checkbox']").click();
 }
-function completed(elem){
-    console.trace();
-    var r = elem.parentElement.parentElement.getElementsByClassName("task_name")[0];
+
+function completed(elem){        
+    var r = elem.parentElement.parentElement.querySelector(".task_name"); // clicked task
     if( elem.checked ){
-        console.log(elem.value);
         r.innerHTML = "<del class='fuzzy'>" + r.innerHTML + "</del>";
         elem.parentElement.parentElement.querySelector(".edit_task").style.display = "none";
         updateOnline("complete",elem.parentElement.parentElement);
@@ -40,6 +40,14 @@ function completed(elem){
         elem.parentElement.parentElement.querySelector(".edit_task").style.display = "inline-block";
         updateOnline("unfinished",elem.parentElement.parentElement);
     }
+
+    // calls the aside_completed_task() function to make the
+    // completed task bring aside in the task list
+    aside_completed_task(elem.parentElement.parentElement);
+}
+
+function aside_completed_task(task) {
+    
 }
 
 var animatorTime = 1;
@@ -55,7 +63,7 @@ function addnew(nodeToBeAdded){
         nodeToBeAdded.style.opacity = "0";
         setTimeout(()=>{
             nodeToBeAdded.style.opacity = "1";
-        },(animatorTime++)*90);
+        },(animatorTime++)*100);
         document.querySelector("#task_container").appendChild(nodeToBeAdded);
     }
     else {            
@@ -89,32 +97,33 @@ function deleteTask(elem){
     },900);
 }
 
-function editTask(elem){
-    var task = elem.parentElement;
-    var taskName = task.querySelector(".task_name");
-    var taskValue = taskName.innerText;
-    if( taskValue.length > 0 ){
-        removeOld(task);
-    }
-    task.querySelector(".edit_task").style.display = "none";
-    task.querySelector(".delete_task").style.display = "none";
-    task.querySelector(".save").style.display = "inline-block";
-    task.querySelector("input").style.visibility = "hidden";
+function editTask(elem,operation){
+        var task = elem.parentElement;
+        var taskName = task.querySelector(".task_name");
+        var taskValue = taskName.innerText;
+        taskNameOld = taskValue;
+        if( operation !="update" && taskValue.length > 0 ){
+            removeOld(task);
+        }
+        task.querySelector(".edit_task").style.display = "none";
+        task.querySelector(".delete_task").style.display = "none";
+        task.querySelector(".save").style.display = "inline-block";
+        task.querySelector("input").style.visibility = "hidden";
 
 
-    // creating a new input field and putting it on for getting new task name 
-    var input = document.createElement("input");
-    var type = document.createAttribute("type");
-    var id = document.createAttribute("id");
-    var placeholder = document.createAttribute("placeholder");
-    type.value = "text";
-    id.value = "editedText";
-    placeholder.value = "Enter New Task Name";
-    input.value = taskValue;
-    input.setAttributeNode(type);
-    input.setAttributeNode(id);
-    input.setAttributeNode(placeholder);
-    taskName.replaceWith(input);
+        // creating a new input field and putting it on for getting new task name 
+        var input = document.createElement("input");
+        var type = document.createAttribute("type");
+        var id = document.createAttribute("id");
+        var placeholder = document.createAttribute("placeholder");
+        type.value = "text";
+        id.value = "editedText";
+        placeholder.value = "Enter New Task Name";
+        input.value = taskValue;
+        input.setAttributeNode(type);
+        input.setAttributeNode(id);
+        input.setAttributeNode(placeholder);
+        taskName.replaceWith(input);
 }
 
 
@@ -145,6 +154,31 @@ function save(elem){
 
     updateOnline("save",elem.parentElement);
     
+}
+function update(elem) {
+    
+    var p = elem.parentElement;
+    var editedText = p.querySelector("#editedText");
+    if(editedText.value.length < 1){
+        console.log("no text inputted");
+        deleteTask(elem);
+        return 0;
+    }
+    var span = document.createElement("span");
+    var Class = document.createAttribute("class");
+    var onclick = document.createAttribute("onclick");
+    Class.value = "task_name";
+    onclick.value = "precompleted(this)";
+    span.setAttributeNode(Class);
+    span.setAttributeNode(onclick);
+    span.innerText = editedText.value; ///.substr(0,35);
+    editedText.replaceWith(span);
+    p.querySelector(".edit_task").style.display = "inline-block";
+    p.querySelector(".delete_task").style.display = "inline-block";
+    p.querySelector("input").style.visibility = "visible";
+    p.querySelector(".save").style.display = "none";
+
+    updateOnline("update",elem.parentElement,taskNameOld);
 }
 
 // This function fetches data from database after page loading 
@@ -222,10 +256,10 @@ function render(tasks){
                             <span class="delete_task" title="Delete Task Name" onclick="deleteTask(this)">
                                 <svg viewBox="0 0 24 24" id="ic_delete_24px" width="100%" height="100%"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path></svg>
                             </span>
-                            <span class="edit_task"  title="Edit Task Name" onclick="editTask(this)">
+                            <span class="edit_task"  title="Edit Task Name" onclick="editTask(this,'update')">
                                 <svg viewBox="0 0 24 24" id="ic_edit_24px" width="100%" height="100%"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>
                             </span>                
-                            <span class="save" title="Click To Save" onclick="save(this)">Save</span>                
+                            <span class="save" title="Click To Save" onclick="update(this)">Save</span>                
                         </div>`;        
         fnode = document.querySelector("#fnode");
         fnode.innerHTML = tmp_task;
@@ -244,14 +278,14 @@ function render(tasks){
 // when any list is deleted this funtion is triggered with 
 // the deleted list and operation to do which in case is delete 
 // as parameter. Same goes for renaming of list and creating new list
-function updateOnline(operation,elem) {
+function updateOnline(operation,elem,taskNameOld) {
 
     // get the primary key of current selected list
     var tmpList = document.querySelector(".selected");
     primary_key = tmpList.querySelector(".list_name").getAttributeNode("data-primary-key").value;
     primary_key = parseInt(primary_key);
     var sql_operation;
-    var taskName = elem.querySelector(".task_name").innerText;
+    var taskNameNew = elem.querySelector(".task_name").innerText;
     var status;
     if(elem.querySelector("input").checked){
         status = "done";
@@ -272,22 +306,12 @@ function updateOnline(operation,elem) {
 
     } else if ( operation == "delete" ) {
         sql_operation = `op=${operation}&taskname=${taskName}&primary_key=${primary_key}`;
-    } else if( operation =="update" ){
-
+    } else if( operation =="update" ){        
+        sql_operation = `op=${operation}&tasknameold=${taskNameOld}&tasknamenew=${taskNameNew}&primary_key=${primary_key}`;
     }
     
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            if(xmlhttp.responseText){
-                console.log(xmlhttp.responseText);
-            }
-            else {
-                
-            }
-        }
-    };
-    xmlhttp.open("POST", "updateData.php", true);
+    xmlhttp.open("POST", "updateData.php", false);
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlhttp.send(sql_operation);
     //console.log(sql_operation);
@@ -304,29 +328,17 @@ function removeOld(elem) {
         return 0;
     }
     // get the primary key of current selected list
-    let primary_key = parseInt(tmpList.
-                        querySelector(".list_name").
-                        getAttributeNode("data-primary-key").
-                        value);
-    
+    let primary_key = parseInt(tmpList.querySelector(".list_name").getAttributeNode("data-primary-key").value);
     
     var taskName = elem.querySelector(".task_name").innerText;
-
     var sql_operation = `op=delete&taskname=${taskName}&primary_key=${primary_key}`;
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            if(xmlhttp.responseText){
-            }
-            else {
-            }
-        }
-    };
-    xmlhttp.open("POST", "updateData.php", true);
+    xmlhttp.open("POST", "updateData.php", false);
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlhttp.send(sql_operation);
 }
 
+//
 function attachEvents(list) {
     list.addEventListener("click",(e)=>{
         var flag = "listonly";

@@ -45,6 +45,15 @@
         $sql = "UPDATE `tasks` SET `taskname`=$taskname WHERE `primary_key`=$primary_key";
         $result = $conn->query($sql);
 
+    } elseif ($_POST["op"] == "update") {
+        $primary_key = $_POST["primary_key"];
+        $tasknameOld = $_POST["tasknameold"];
+        $tasknameNew = $_POST["tasknamenew"];
+        $primary_key = $_POST["primary_key"];
+        $sql = "UPDATE `tasks` SET `taskname`='$tasknameNew' WHERE `primary_key`=$primary_key AND `taskname`='$tasknameOld'";        
+        echo $sql;
+        $result = $conn->query($sql);
+
     } elseif ($_POST["op"] == "deleteAccount" ) {
         # code...
         $user = $_SESSION["uname"];
