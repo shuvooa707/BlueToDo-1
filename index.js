@@ -40,7 +40,7 @@ function completed(elem){
         // completed task bring aside in the task list
         aside_completed_task(elem.parentElement.parentElement,"DOWN");
     } else {
-        r.innerHTML = r.innerText;
+        r.innerHTML = r.innerHTML;
         elem.parentElement.parentElement.querySelector(".edit_task").style.display = "inline-block";
         updateOnline("unfinished",elem.parentElement.parentElement);
 
@@ -120,7 +120,7 @@ function deleteTask(elem){
 function editTask(elem,operation){
         var task = elem.parentElement;
         var taskName = task.querySelector(".task_name");
-        var taskValue = taskName.innerText;
+        var taskValue = taskName.innerHTML;
         taskNameOld = taskValue;
         if( operation !="update" && taskValue.length > 0 ){
             removeOld(task);
@@ -165,7 +165,7 @@ function save(elem){
     onclick.value = "precompleted(this)";
     span.setAttributeNode(Class);
     span.setAttributeNode(onclick);
-    span.innerText = editedText.value; ///.substr(0,35);
+    span.innerHTML = editedText.value; ///.substr(0,35);
     editedText.replaceWith(span);
     p.querySelector(".edit_task").style.display = "inline-block";
     p.querySelector(".delete_task").style.display = "inline-block";
@@ -191,7 +191,7 @@ function update(elem) {
     onclick.value = "precompleted(this)";
     span.setAttributeNode(Class);
     span.setAttributeNode(onclick);
-    span.innerText = editedText.value; ///.substr(0,35);
+    span.innerHTML = editedText.value; ///.substr(0,35);
     editedText.replaceWith(span);
     p.querySelector(".edit_task").style.display = "inline-block";
     p.querySelector(".delete_task").style.display = "inline-block";
@@ -223,7 +223,7 @@ function onStartUp(){
             // changing the header of the task list
             var selectedList = document.querySelector(".selected");
             if( selectedList ){
-                document.querySelector("#header").innerText = selectedList.querySelector(".list_name").innerText;
+                document.querySelector("#header").innerHTML = selectedList.querySelector(".list_name").innerHTML;
             }
         } else {
             // if something goes worng then prints it on console window
@@ -253,6 +253,8 @@ function render(tasks){
         return 0;
     } else {
         tasks = JSON.parse(tasks);
+        console.log("tasks = "+tasks);
+
     }
     // Pushing the data to DOM
     tasks.
@@ -308,7 +310,7 @@ function updateOnline(operation,elem,taskNameOld) {
     primary_key = tmpList.querySelector(".list_name").getAttributeNode("data-primary-key").value;
     primary_key = parseInt(primary_key);
     var sql_operation;
-    var taskNameNew = taskName =  elem.querySelector(".task_name").innerText;
+    var taskNameNew = taskName =  elem.querySelector(".task_name").innerHTML;
     var status;
     if(elem.querySelector("input").checked){
         status = "done";
@@ -323,7 +325,7 @@ function updateOnline(operation,elem,taskNameOld) {
 
     } else if( operation == "save" ) {
         taskName = document.querySelector(".selected");
-        taskName = elem.querySelector(".task_name").innerText;
+        taskName = elem.querySelector(".task_name").innerHTML;
 
         sql_operation = `op=${operation}&taskname=${taskName}&status=${status}&primary_key=${primary_key}`;
 
