@@ -35,19 +35,31 @@ function completed(elem){
         r.innerHTML = "<del class='fuzzy'>" + r.innerHTML + "</del>";
         elem.parentElement.parentElement.querySelector(".edit_task").style.display = "none";
         updateOnline("complete",elem.parentElement.parentElement);
+
+        // calls the aside_completed_task() function to make the
+        // completed task bring aside in the task list
+        aside_completed_task(elem.parentElement.parentElement,"DOWN");
     } else {
         r.innerHTML = r.innerText;
         elem.parentElement.parentElement.querySelector(".edit_task").style.display = "inline-block";
         updateOnline("unfinished",elem.parentElement.parentElement);
-    }
 
-    // calls the aside_completed_task() function to make the
-    // completed task bring aside in the task list
-    aside_completed_task(elem.parentElement.parentElement);
+        // calls the aside_completed_task() function to make the
+        // completed task bring aside in the task list
+        aside_completed_task(elem.parentElement.parentElement,"UP");
+    }
 }
 
-function aside_completed_task(task) {
-    
+function aside_completed_task(task,direction) {
+    var task_container = document.querySelector("#task_container");
+    var tmp = task;
+    if( direction == "DOWN" ){
+        task_container.removeChild(task);
+        task_container.appendChild(tmp);
+    } else {
+        task_container.removeChild(task);
+        task_container.prepend(tmp);
+    }
 }
 
 var animatorTime = 1;
@@ -183,40 +195,36 @@ function update(elem) {
 
 // This function fetches data from database after page loading 
 function onStartUp(){
-    var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                // if it returns data then that data is given to render funtion to be put on DOM
-				if(xmlhttp.responseText){
-                    data = xmlhttp.responseText;
-                    if(data.includes("x0x") && data.includes("list_name") && data.includes("::listafter::")){
-                        var tmp = data.substr( data.indexOf("["),data.length-1 );
-                        tmp = tmp.split("::listafter::")[0];
-                        renderlistgroup( tmp );
-                    } else if( data.includes("list_name") && data.includes("::listafter::") ) {
-                        // construct DOM of Lists
-                        renderlistgroup(data.split("::listafter::")[0]);
-                        // construct DOM of Tasks
-                        render(data.split("::listafter::")[1]);
-                        console.log(data.split("::listafter::")[1]);
-                        // changing the header of the task list
-                        var selectedList = document.querySelector(".selected");
-                        if( selectedList ){
-                            document.querySelector("#header").innerText = selectedList.querySelector(".list_name").innerText;
-                        }
-                    } else {
-                        // if something goes worng then prints it on console window
-                        console.log(data);
-                    }
-				}
-				else {
-					
-				}
-            }
-        };
+    var xmlhttp = new XMLHttpRequest(); 
     // getData.php is the file used to fetch data from database
-    xmlhttp.open("POST", "getData.php", true);
-    xmlhttp.send();
+    xmlhttp.open("POST", "getData.php", false);
+    xmlhttp.send();   
+    // if it returns data then that data is given to render funtion to be put on DOM
+    if(xmlhttp.responseText){
+        data = xmlhttp.responseText;
+        if(data.includes("x0x") && data.includes("list_name") && data.includes("::listafter::")){
+            var tmp = data.substr( data.indexOf("["),data.length-1 );
+            tmp = tmp.split("::listafter::")[0];
+            renderlistgroup( tmp );
+        } else if( data.includes("list_name") && data.includes("::listafter::") ) {
+            // construct DOM of Lists
+            renderlistgroup(data.split("::listafter::")[0]);
+            // construct DOM of Tasks
+            render(data.split("::listafter::")[1]);
+            console.log(data.split("::listafter::")[1]);
+            // changing the header of the task list
+            var selectedList = document.querySelector(".selected");
+            if( selectedList ){
+                document.querySelector("#header").innerText = selectedList.querySelector(".list_name").innerText;
+            }
+        } else {
+            // if something goes worng then prints it on console window
+            console.log(data);
+        }
+    } else {
+        // if response does not come then prints it on console window
+        console.log("Something Went Worng!! Response Didn't Come");        
+    }
 }
 
 // This function draws data on the page in other 
@@ -239,7 +247,14 @@ function render(tasks){
         tasks = JSON.parse(tasks);
     }
     // Pushing the data to DOM
-    tasks.forEach((element,index,self) => {
+    tasks.
+    sort((a,b)=>{
+        if( a.status == "done" && b.status != "done" ){
+            return 1;
+        } else if( a.status != "done" && b.status == "done" ){
+            return -1;
+        }
+    }).forEach((element) => {
         if(element["status"]=="done"){
             status = "checked";
             tname = `<span class="task_name" onclick="precompleted(this)"><del class='fuzzy'>${element["taskname"]}</del></span>`;
@@ -285,7 +300,7 @@ function updateOnline(operation,elem,taskNameOld) {
     primary_key = tmpList.querySelector(".list_name").getAttributeNode("data-primary-key").value;
     primary_key = parseInt(primary_key);
     var sql_operation;
-    var taskNameNew = elem.querySelector(".task_name").innerText;
+    var taskNameNew = taskName =  elem.querySelector(".task_name").innerText;
     var status;
     if(elem.querySelector("input").checked){
         status = "done";
@@ -318,25 +333,6 @@ function updateOnline(operation,elem,taskNameOld) {
     console.trace();
 }
 
-// removes the old task when that corresponding task is modified
-function removeOld(elem) {
-    console.log("removeOld invoked");    
-    // get the current selected list
-    let tmpList = document.querySelector(".selected");
-    if (!tmpList) {
-        alert("Select a List First !!");
-        return 0;
-    }
-    // get the primary key of current selected list
-    let primary_key = parseInt(tmpList.querySelector(".list_name").getAttributeNode("data-primary-key").value);
-    
-    var taskName = elem.querySelector(".task_name").innerText;
-    var sql_operation = `op=delete&taskname=${taskName}&primary_key=${primary_key}`;
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("POST", "updateData.php", false);
-    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.send(sql_operation);
-}
 
 //
 function attachEvents(list) {
@@ -351,7 +347,6 @@ function attachEvents(list) {
                 flag = "savelist";
             }
         });
-
         if ( flag == "editlist" ){
             console.log(" %cEdit  ","color:purple");
         } else if( flag == "deletelist" ) {
