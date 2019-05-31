@@ -55,16 +55,7 @@ function deleteList(elem){
     if(elem.previousElementSibling.innerText.length > 0){
         flag = 1;
     }
-    // This block of code sets the animation of deletion act
-    elem.parentElement.style.transitionDuration=".8s";
-    elem.parentElement.style.height="0px";
-    elem.parentElement.style.opacity="0"; 
-    elem.parentElement.style.border="0"; 
-    elem.parentElement.style.margin="0"; 
-    elem.parentElement.style.padding="0";    
-    setTimeout( ()=>{
-        elem.parentElement.remove();
-    },1100);
+    elem.parentElement.remove();
     if(flag){
         updateOnlineList("delete",elem.parentElement);
         console.log(elem + "Deleted ");
@@ -121,6 +112,9 @@ function saveList(elem){
     span.setAttributeNode(Class);
     span.innerText = editedText.value; //.substr(0,1035);
     editedText.replaceWith(span);
+    
+    // highlighting the newly created list
+    setTimeout( ()=>{span.click()},2);
 
     list.querySelector(".edit_list").style.display = "inline-block";
     list.querySelector(".delete_list").style.display = "inline-block";
@@ -128,7 +122,6 @@ function saveList(elem){
     list.querySelector(".numberTagList").style.display = "block";
 
     //setting a new key to data-primary-key attribute
-    var all_list = document.querySelectorAll(".list");
     var newly_created_list = list;
     var list_name_of  = newly_created_list.querySelector(".list_name");
     var new_data_attribute = document.createAttribute("data-primary-key");

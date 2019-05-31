@@ -16,7 +16,7 @@ function createNewTask(){
                             <span class="edit_task"  title="Edit Task Name" onclick="editTask(this,'update')">
                                 <svg viewBox="0 0 24 24" id="ic_edit_24px" width="100%" height="100%"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>
                             </span>                
-                            <span class="save" title="Click To Save" onclick="update(this)">Save</span>                
+                            <span class="save" title="Click To Save" onclick="save(this)">Save</span>                
                         </div>`;
 
     newTask = document.querySelector("#fnode");
@@ -54,11 +54,19 @@ function aside_completed_task(task,direction) {
     var task_container = document.querySelector("#task_container");
     var tmp = task;
     if( direction == "DOWN" ){
-        task_container.removeChild(task);
-        task_container.appendChild(tmp);
+        disappear(task);
+        setTimeout( ()=>{
+            task_container.removeChild(task);
+            task_container.appendChild(tmp);
+            appear(task);
+        },500);
     } else {
-        task_container.removeChild(task);
-        task_container.prepend(tmp);
+        disappear(task);
+        setTimeout( ()=>{
+            task_container.removeChild(task);
+            task_container.prepend(tmp);
+            appear(task);
+        },500);
     }
 }
 
@@ -362,10 +370,16 @@ function attachEvents(list) {
 }
 // this function pauses the moving animation on being clicked 
 function playNpause(node){
-    if(node.style.animationPlayState =="" || node.style.animationPlayState=="running"){
-        node.style.animationPlayState = "paused";
-    } else {
-        node.style.animationPlayState = "running";
+    if ( node.id == "clickToAddlist" ){
+        node.classList.remove("animate1");
+        setTimeout( ()=>{
+            node.classList.add("animate1");
+        },1);
+    } else if( node.id == "clickToAdd" ) {
+        node.classList.remove("animate2");
+        setTimeout( ()=>{
+            node.classList.add("animate2");
+        },1);
     }
 }
 
@@ -379,6 +393,25 @@ window.onload = function(){
         //attachEvents();
 
 };
+
+
+function disappear( node, transition ) {
+    node.style.transitionDuration = transition? transition : ".5s";
+    node.style.height = node.offsetHeight + 'px';
+    setTimeout(()=>{
+        node.style.opacity = "0";
+        node.style.height = "0px";
+    },1);
+}
+function appear( node, transition ) {
+    node.style.transitionDuration = transition? transition : ".5s";
+    node.style.height = '0px';
+    setTimeout(()=>{
+        node.style.opacity = "1";
+        node.style.height = "44px";    
+    },1);
+}
+
 
 // List of all the fucntions
     // signout();
