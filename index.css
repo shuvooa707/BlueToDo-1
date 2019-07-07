@@ -142,12 +142,12 @@ img#backgroundImage{
     margin: 4px;
 }
 .task_name{
-    font-size: 16px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14.5px;
+    font-family: sans-serif;
     text-align: center;
     display: inline-block;
     margin: 5px 10px;
-    max-width: 260px;
+    max-width: 280px;
     height: auto;
     cursor: pointer;
 }
@@ -261,12 +261,6 @@ img#backgroundImage{
     color: #515151;
     /* font-weight: 700; */
 }
-#editedText:focus{
-    width: 250px;
-    /* margin-left: 10px; */
-    border-radius: 0px;
-    /* border: .1em solid orange; */
-}
 
 #clickToAdd{
     display: inline-block;
@@ -283,14 +277,16 @@ img#backgroundImage{
 
 #loginContainer{
     box-shadow: 1px 1px solid #aaa;
-    border: .1em solid #a2a2a22e;
+    border: .1em solid #000000;
+    border-radius: 4px;
     display: inline-block;
-    background: var(--color);
+    background: #1c1c1c4f;
+    /* opacity: .2; */
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -80%);
-    border-radius: 20px;
+    /* border-radius: 20px; */
 }
 #loginContainer > div{
     padding: 20px 50px;
@@ -298,13 +294,14 @@ img#backgroundImage{
 #userName{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 15px;
-    color: var(--color);
+    /* color: white; */
     width: 250px;
     /* border-radius: 20px; */
     border: 0px;
     /* border: .1em solid yellow; */
     transition-duration: .2s;
     padding: 8px 10px;
+    /* background: #1e90ff85; */
 }
 #password{
     width: 250px;

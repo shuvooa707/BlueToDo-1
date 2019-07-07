@@ -16,13 +16,13 @@
     overflow-x: hidden;
 }
 #list-container-header{
-    width: 102%;
+    width: 100%;
     background: #563d7c;
     padding: 15px 0px;
     position: relative;
     margin: 0px;
     top: -12px;
-    left: -0.06em;
+    /* left: -0.06em; */
     font-size: x-large;
     color: #ffffff;
     text-align: center;
@@ -175,11 +175,7 @@
     /* font-weight: 700; */
     font-family: verdana;
 }
-#editedText:focus{
-    width: 236px;
-    /* border-radius: 0px; */
-    /* border: .1em solid orange; */
-}
+
 
 #clickToAddlist{
     display: inline-block;
