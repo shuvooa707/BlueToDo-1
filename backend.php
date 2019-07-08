@@ -1,16 +1,19 @@
 <?php
     session_start();
     $servername = "localhost";
-    $username = "root";
     $password = "";
     $dbname = "todolist";
-    $uname = $_SESSION["uname"];
+    
+    $username = $uname = $_SESSION["uname"];
     // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = new mysqli($servername, "root", $password, $dbname);
     // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
+
+    
+    /* Operating for List */
     if( isset($_POST["op"]) && $_POST["op"] == "deleteList"){
         $list_list_id = $_POST["list_list_id"];
         $sql = "DELETE FROM `list` WHERE username='$uname' AND list_list_id=$list_list_id";
@@ -19,14 +22,16 @@
         $result = $conn->query($sql);
         $result ? printf("List With all it's Tasks deleted") : printf("List wasn't deleted");
     } 
+
     elseif ( isset($_POST["op"]) && $_POST["op"] == "saveNewList") {
-        $listname = $_POST["listname"];
-        $username = $_SESSION["username"];
+        $listname = addslashes(ucfirst($_POST["listname"]));
+        $username = $_SESSION["uname"];
         $conn->query("UPDATE list SET is_selected=0 WHERE is_selected=1 AND username='$username'");
         $sql = "INSERT INTO `list` (`username`, `list_name`, `is_selected`) VALUES ('$username', '$listname',1)";                
         $conn->query($sql);
         echo (int)$conn->query("SELECT list_list_id FROM list WHERE is_selected=1 AND username='$username'")->fetch_assoc()["list_list_id"];  
     } 
+
     elseif ( isset($_POST["op"]) && $_POST["op"] == "renameList") {
         $newlistname = addslashes($_POST["newlistname"]);
         $list_list_id = $_POST["list_list_id"];
@@ -36,17 +41,14 @@
     } 
     
     if( isset($_POST["operation"]) && $_POST["operation"] == "getTasksOfList" ) {
-        $list_list_id = (int)$_POST["list_id"];
+        $list_id = (int)$_POST["list_id"];
         // fetches all the tasks of selected list
-        
-        $sql = "UPDATE list SET is_selected=0 WHERE is_selected=1 AND username='$uname'";
-        $result = $conn->query($sql);
-        
-        $sql = "UPDATE list SET is_selected=1 WHERE list_list_id=$list_list_id AND username='$uname'";
+
+        $conn->query("UPDATE list SET is_selected=0 WHERE is_selected=1 AND username='$username'");
+        $sql = "SELECT  * FROM tasks WHERE tasks_list_id=$list_id";
         $result = $conn->query($sql);
 
-        $sql = "SELECT  * FROM tasks WHERE username='$uname' AND tasks_list_id=$list_list_id";
-        $result = $conn->query($sql);
+        $conn->query("UPDATE list SET is_selected=1 WHERE list_list_id=$list_id AND username='$username'");
         $data = array();
         // echo $sql;
         if ( $result->num_rows > 0) {
@@ -54,10 +56,9 @@
             while( $row = $result->fetch_assoc() ) {
                 array_push($data,$row);
             }
+            echo json_encode($data);
         } else {
-            echo "x0x0";
         } 
-        echo json_encode($data);
         exit(0);
     }
     
@@ -65,9 +66,7 @@
     if ( isset($_POST["operation"]) && $_POST["operation"] == "getListPostOnStartUp" ) {        
         // get the primary key
         $sql = "SELECT list_list_id FROM list WHERE username='$uname' AND is_selected=1";
-        $list_list_id = (int)$conn->query($sql)->fetch_assoc()["list_list_id"];
-
-        
+        $list_list_id = (int)$conn->query($sql)->fetch_assoc()["list_list_id"];        
         // fetches all the tasks of selected list
         $sql = "SELECT  * FROM tasks WHERE tasks_list_id=$list_list_id";
         $result = $conn->query($sql);
@@ -93,8 +92,10 @@
             echo "x0x3";
         }       
     } 
-
     
+    /* /Operating for List */
+
+    // Operating for tasks 
     if( isset($_POST["op"]) && $_POST["op"] == "delete"){
         $tasks_task_id = $_POST["tasks_task_id"];
         $sql = "DELETE FROM `tasks` WHERE tasks_task_id=$tasks_task_id";
