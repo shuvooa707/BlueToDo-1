@@ -1,11 +1,12 @@
 /**************************
   * Remember Folks GLOBAL *
-  *  ~Veriables Are Evil~   *
+  * Variables Are ~Evil~   *
   **************************/
 
 var newList = "";
 var totalList = 0;
 var delete_or_modify = 0;
+var opType = "";
 function createnewList(){
     newList = document.querySelector("#fnode");
     newList.innerHTML = `<div class="list">
@@ -41,7 +42,7 @@ function addnewlist(nodeToBeAdded){
         var newly_created_list = all_list[all_list.length-1];
 
         // 
-        editList(newly_created_list);
+        editList(newly_created_list,"newList");
         if(document.querySelector("#clickToAddlist").style.visibility){
             document.querySelector("#clickToAddlist").style.display = "inline-block";
         }
@@ -57,7 +58,7 @@ function deleteList(elem){
     }
     elem.parentElement.remove();
     if(flag){
-        updateOnlineList("delete",elem.parentElement);
+        updateOnlineList("deleteList",elem.parentElement);
         console.log(elem + "Deleted ");
     }
     // Clearing the task container
@@ -66,17 +67,14 @@ function deleteList(elem){
     }
 }
 
-function editList(elem){
+function editList(elem,typeGiven){
+    if( typeGiven == "editOldList" ){
+        opType = "editOldList";
+        console.log(typeGiven);
+    }
     var list = elem.parentElement;
     var listName = list.querySelector(".list_name").innerText;
     // checks if the list name is newly created or old and to be modified
-    if( listName.length > 0 ){
-        delete_or_modify = 1;
-        totalList = 0;
-        oldListName = listName;
-        console.log("editList :1:"+parseInt(list.querySelector(".list_name").getAttributeNode("data-primary-key").value));
-        before_edited_old_primary_key = parseInt(list.querySelector(".list_name").getAttributeNode("data-primary-key").value);
-    }
     list.querySelector(".edit_list").style.display = "none";
     list.querySelector(".delete_list").style.display = "none";
     list.querySelector(".save_list").style.display = "inline-block";
@@ -102,43 +100,39 @@ function saveList(elem){
     var list = elem.parentElement;
     var editedText = list.querySelector("#editedTextList");
     // if input field is empty or not
-    if(editedText.value.length < 1){
+    if(editedText.value.length < 1) {
         deleteList(elem);
         return 0;
     }
     var span = document.createElement("span");
-    var Class = document.createAttribute("class");
-    Class.value = "list_name";
-    span.setAttributeNode(Class);
+    var spanClass = document.createAttribute("class");
+    spanClass.value = "list_name";
+    span.setAttributeNode(spanClass);
     span.innerText = editedText.value; //.substr(0,1035);
     editedText.replaceWith(span);
     
-    // highlighting the newly created list
-    setTimeout( ()=>{span.click()},2);
 
     list.querySelector(".edit_list").style.display = "inline-block";
     list.querySelector(".delete_list").style.display = "inline-block";
     list.querySelector(".save_list").style.display = "none";
     list.querySelector(".numberTagList").style.display = "block";
 
-    //setting a new key to data-primary-key attribute
+    // setting a new key to data-primary-key attribute
     var newly_created_list = list;
     var list_name_of  = newly_created_list.querySelector(".list_name");
-    var new_data_attribute = document.createAttribute("data-primary-key");
     var new_onlick_attribute = document.createAttribute("onclick");
-    new_onlick_attribute.value = "updateList(this)";
+    new_onlick_attribute.value = "updateList(this,'editOldList')";
     list_name_of.setAttributeNode(new_onlick_attribute);
 
+    
+    // console.log("type",type);
     // if its a newly created list
-    if( delete_or_modify == 0 ){
-        new_data_attribute.value = new_key(list_name_of.innerText);
-        list_name_of.setAttributeNode(new_data_attribute);
-        updateOnlineList("save",newly_created_list);    
+    if( opType != "editOldList" ){
+        updateOnlineList("saveNewList",newly_created_list);    
     // if it's a old list
-    } else{
-        new_data_attribute.value = before_edited_old_primary_key;
-        list_name_of.setAttributeNode(new_data_attribute);
-        modifyOldList("modify",elem);
+    } else {
+        console.log("modifyOldList");
+        modifyOldList("renameList",elem);
     }
 }
 
@@ -146,15 +140,6 @@ function saveList(elem){
 // This function fetches data from database
 // inersts them into the list
 function renderlistgroup(data){
-    var data  = `${data}`;
-   // console.log(data);
-    if( data.includes("x0x") ){
-        console.log("No List Found");        
-        return 0;
-    }
-    data = JSON.parse(data);
-    // Pushing the data to DOM
-    // console.log(data[0].is_selected);
 
     data.forEach((element) => {
         if( parseInt(element.is_selected) ){
@@ -162,13 +147,13 @@ function renderlistgroup(data){
         } else {
             selected = "";
         }
-        var tmp_list = `<div class="list  ${selected}">
+        var tmp_list = `<div class="list  ${selected}" data-list-id="${element.list_list_id}" >
                             <span class="numberTagList" onclick="updateList(this.nextElementSibling)">${++totalList}</span>
-                            <span class="list_name"  onclick="updateList(this)" data-primary-key="${element['primary_key']}">${element['list_name']}</span>
+                            <span class="list_name"  onclick="updateList(this)" data-list_id="${element['list_list_id']}">${element['list_name']}</span>
                             <span class="delete_list" title="Delete Task Name" onclick="deleteList(this)">
                                 <svg viewBox="0 0 24 24" id="ic_delete_24px" width="100%" height="100%"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path></svg>
                             </span>
-                            <span class="edit_list"  title="Edit Task Name" onclick="editList(this)">
+                            <span class="edit_list"  title="Edit Task Name" onclick="editList(this,'editOldList')">
                                 <svg viewBox="0 0 24 24" id="ic_edit_24px" width="100%" height="100%"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>
                             </span>                
                             <span class="save_list" title="Click To Save" onclick="saveList(this)">Save</span>                
@@ -178,7 +163,7 @@ function renderlistgroup(data){
         tmp_list = document.querySelector("#fnode");
         tmp_list = tmp_list.querySelector(".list");
         // attach onclick event before inserting into the DOM 
-        attachEvents(tmp_list);
+//         attachEvents(tmp_list);
         // calling the addnewlist function which
         // inserts all the list into the DOM 
         addnewlist(tmp_list);        
@@ -191,8 +176,8 @@ function modifyOldList( operation,elem ) {
     totalList = 0;
     var p = elem.parentElement;
     var listName = p.querySelector(".list_name");
-    var primary_key = get_primary_key( elem.parentElement );
-    var sql = `op=${operation}&newlistname=${listName.innerText}&primary_key=${primary_key}`;
+    var list_list_id = elem.parentElement.getAttributeNode("data-list-id").value;
+    var sql = `op=renameList&newlistname=${listName.innerText}&list_list_id=${list_list_id}`;
     console.log(sql);
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
@@ -205,7 +190,7 @@ function modifyOldList( operation,elem ) {
             }
         }
     };
-    xmlhttp.open("POST", "updateListData.php", true);
+    xmlhttp.open("POST", "backend.php", true);
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlhttp.send(sql);
 }
@@ -214,30 +199,32 @@ function modifyOldList( operation,elem ) {
 
 // Updates tasks on click on any list
 function updateList( node ){
+    changeSelectedHighlight( node );
     totalTask = 0;
     console.log(" updateList() function has been invoked ");
     document.querySelector("#task_container").innerHTML="";
-    var primary_key = get_primary_key(node.parentElement);
-    console.log(primary_key);
+    var list_id = parseInt(node.parentElement.getAttributeNode("data-list-id").value);
+    console.log(list_id);
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            if(xmlhttp.responseText){
-               var tasks = xmlhttp.responseText;
-               tasks = tasks.split("::listafter::")[0];
-                changeSelectedHighlight( node );
-                render(tasks);
+            if( xmlhttp.responseText.length > 10 ){
+                var tasks = JSON.parse(xmlhttp.responseText);
+                console.log(tasks);
+                renderTasks(tasks);
                 // changing the header of the task list
                 document.querySelector("#header").innerText = node.innerText;
+                changeSelectedHighlight( node );
+                console.log(node);
             }
-            else {
-                
+            else {      
+                console.log("Tango 108");
             }
         }
     };
-    xmlhttp.open("POST", "getListData.php", true);
+    xmlhttp.open("POST", "backend.php", true);
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.send(`primary_key=${primary_key}&primary_key_set=yes`);
+    xmlhttp.send(`operation=getTasksOfList&list_id=${list_id}`);
 }
 
 
@@ -245,13 +232,13 @@ function updateList( node ){
 function updateOnlineList(operation,elem) {
     var data;
     var listName = elem.querySelector(".list_name").innerText;
-    var primary_key = get_primary_key(elem);
 
-    if( operation == "save" ) {
-        data = `op=${operation}&listname=${listName}&primary_key=${primary_key}`;
+    if( operation == "saveNewList" ) {
+        data = `op=${operation}&listname=${listName}`;
         console.log(data);
-    } else if ( operation == "delete" ) {
-        data = `op=${operation}&listname=${listName}&primary_key=${primary_key}`;
+    } else if ( operation == "deleteList" ) {
+        var list_id = parseInt(elem.getAttributeNode("data-list-id").value);
+        data = `op=${operation}&listname=${listName}&list_list_id=${list_id}`;
         console.log(data);
     }
 
@@ -260,43 +247,29 @@ function updateOnlineList(operation,elem) {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             if(xmlhttp.responseText){
                 //console.log(xmlhttp.responseText);
+                var new_data_attribute = document.createAttribute("data-list-id");
+                new_data_attribute.value = xmlhttp.responseText;
+                elem.setAttributeNode(new_data_attribute);
+                // highlighting the newly created list
+                setTimeout( ()=>{elem.click()},2);
             }
             else {
                 
             }
         }
     };
-    xmlhttp.open("POST", "updateListData.php", true);
+    xmlhttp.open("POST", "backend.php", true);
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlhttp.send(data);
 }
 
-function get_primary_key(elem){
-
-    var primary_key = elem.querySelector(".list_name").getAttributeNode("data-primary-key").value;
-
-    return parseInt(primary_key);
-}
-
-function new_key(listName) {
-    
-    var date = new Date();
-    var tmp = "";
-    tmp += date.getFullYear()  
-    tmp += date.getMonth(); 
-    tmp += date.getDay(); 
-    tmp += date.getMinutes();
-    tmp += date.getSeconds();
-
-    return tmp;
-    
-}
-
 
 function changeSelectedHighlight( node ){
+    console.trace();
     var all_list = document.querySelectorAll(".list");
+    console.log(node);
     selected = node.parentElement.querySelector(".edit_list");
-    all_list.forEach((elem,index)=>{
+    all_list.forEach( elem=>{
         elem.classList.remove("selected");
         elem.querySelector(".numberTagList").style.background = "white";
         elem.querySelector(".numberTagList").style.color = "#563d7c";

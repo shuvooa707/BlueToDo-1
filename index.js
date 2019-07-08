@@ -198,37 +198,25 @@ function update(elem) {
     p.querySelector("input").style.visibility = "visible";
     p.querySelector(".save").style.display = "none";
 
-    updateOnline("update",elem.parentElement,taskNameOld);
+    updateOnline("renameTask",elem.parentElement,taskNameOld);
 }
 
 // This function fetches data from database after page loading 
 function onStartUp(){
     var xmlhttp = new XMLHttpRequest(); 
     // getData.php is the file used to fetch data from database
-    xmlhttp.open("POST", "getData.php", false);
-    xmlhttp.send();   
+    xmlhttp.open("POST", "backend.php", false);
+    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    xmlhttp.send("operation=getListPostOnStartUp");   
     // if it returns data then that data is given to render funtion to be put on DOM
-    if(xmlhttp.responseText){
-        data = xmlhttp.responseText;
-        if(data.includes("x0x") && data.includes("list_name") && data.includes("::listafter::")){
-            var tmp = data.substr( data.indexOf("["),data.length-1 );
-            tmp = tmp.split("::listafter::")[0];
-            renderlistgroup( tmp );
-        } else if( data.includes("list_name") && data.includes("::listafter::") ) {
-            // construct DOM of Lists
-            renderlistgroup(data.split("::listafter::")[0]);
-            // construct DOM of Tasks
-            render(data.split("::listafter::")[1]);
-            console.log(data.split("::listafter::")[1]);
-            // changing the header of the task list
-            var selectedList = document.querySelector(".selected");
-            if( selectedList ){
-                document.querySelector("#header").innerText = selectedList.querySelector(".list_name").innerText;
-            }
-        } else {
-            // if something goes worng then prints it on console window
-            console.log(data);
-        }
+    if( xmlhttp.responseText.length > 5){
+        var tasks = JSON.parse(xmlhttp.responseText)[1];
+        var lists = JSON.parse(xmlhttp.responseText)[0];
+        console.log(tasks);
+
+        renderlistgroup( lists );                
+        renderTasks( tasks );
+                    
     } else {
         // if response does not come then prints it on console window
         console.log("Something Went Worng!! Response Didn't Come");        
@@ -237,23 +225,14 @@ function onStartUp(){
 
 // This function draws data on the page in other 
 // language it draws the data on on page using DOM
-function render(tasks){
+function renderTasks(tasks){
     
     
     // Clearing the task container on for rendering 
     // or re-rendering the tasks
     document.querySelector("#task_container").innerHTML="";
     totalTask = 0;
-    if( tasks[0] == "x" ){
-        console.log("No Task Found");        
-        return 0;
-    }
-    if( tasks.includes("{}") ){
-        console.log(tasks);        
-        return 0;
-    } else {
-        tasks = JSON.parse(tasks);
-    }
+
     // Pushing the data to DOM
     tasks.
     sort((a,b)=>{
@@ -261,21 +240,22 @@ function render(tasks){
             return 1;
         } else if( a.status != "done" && b.status == "done" ){
             return -1;
-        }
-    }).forEach((element) => {
-        if(element["status"]=="done"){
+        }})
+    .forEach((element) => {
+        if( element["status"] == "done" ){
             status = "checked";
             tname = `<span class="task_name" onclick="precompleted(this)"><del class='fuzzy'>${element["taskname"]}</del></span>`;
         } else {
             status = "";
             tname = `<span class="task_name" onclick="precompleted(this)">${element["taskname"]}</span>`;
         }
-        var tmp_task = `<div class="task">
+        var tmp_task = `<div class="task" data-task-id="${element.tasks_task_id}">
                             <span class="done">
                                 <input type="checkbox" onclick="completed(this)" ${status}>
                             </span>
                             <span class="numberTagTask" >${++totalTask}</span>
-                            ${tname}
+                            ${tname
+                            }
                             <span class="delete_task" title="Delete Task Name" onclick="deleteTask(this)">
                                 <svg viewBox="0 0 24 24" id="ic_delete_24px" width="100%" height="100%"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path></svg>
                             </span>
@@ -302,11 +282,6 @@ function render(tasks){
 // the deleted list and operation to do which in case is delete 
 // as parameter. Same goes for renaming of list and creating new list
 function updateOnline(operation,elem,taskNameOld) {
-
-    // get the primary key of current selected list
-    var tmpList = document.querySelector(".selected");
-    primary_key = tmpList.querySelector(".list_name").getAttributeNode("data-primary-key").value;
-    primary_key = parseInt(primary_key);
     var sql_operation;
     var taskNameNew = taskName =  elem.querySelector(".task_name").innerText;
     var status;
@@ -317,24 +292,27 @@ function updateOnline(operation,elem,taskNameOld) {
     }
 
     if( operation == "complete" ){
-        sql_operation = `op=${operation}&taskname=${taskName}&status=${status}&primary_key=${primary_key}`;        
+        var task_id = elem.getAttributeNode("data-task-id").value;
+        sql_operation = `op=${operation}&status=${status}&tasks_task_id=${task_id}`;        
     } else if( operation == "unfinished" ){
-        sql_operation = `op=${operation}&taskname=${taskName}&status=${status}&primary_key=${primary_key}`;  
+        var task_id = elem.getAttributeNode("data-task-id").value;
+        sql_operation = `op=${operation}&status=${status}&tasks_task_id=${task_id}`;  
 
     } else if( operation == "save" ) {
-        taskName = document.querySelector(".selected");
-        taskName = elem.querySelector(".task_name").innerText;
-
-        sql_operation = `op=${operation}&taskname=${taskName}&status=${status}&primary_key=${primary_key}`;
+        var taskName = elem.querySelector(".task_name").innerText;
+        var tasks_list_id = parseInt(document.querySelector(".selected").getAttributeNode("data-list-id").value);
+        sql_operation = `op=${operation}&taskname=${taskName}&status=${status}&tasks_list_id=${tasks_list_id}`;
 
     } else if ( operation == "delete" ) {
-        sql_operation = `op=${operation}&taskname=${taskName}&primary_key=${primary_key}`;
-    } else if( operation =="update" ){        
-        sql_operation = `op=${operation}&tasknameold=${taskNameOld}&tasknamenew=${taskNameNew}&primary_key=${primary_key}`;
+        var task_id = parseInt(elem.getAttributeNode("data-task-id").value);
+        sql_operation = `op=${operation}&taskname=${taskName}&tasks_task_id=${task_id}`;
+    } else if( operation =="renameTask" ){   
+        var task_id = parseInt(elem.getAttributeNode("data-task-id").value);     
+        sql_operation = `op=${operation}&tasknameold=${taskNameOld}&tasknamenew=${taskNameNew}&tasks_task_id=${task_id}`;
     }
     
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("POST", "updateData.php", false);
+    xmlhttp.open("POST", "backend.php", false);
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlhttp.send(sql_operation);
     //console.log(sql_operation);
@@ -356,13 +334,13 @@ function attachEvents(list) {
             }
         });
         if ( flag == "editlist" ){
-            console.log(" %cEdit  ","color:purple");
+//             console.log(" %cEdit  ","color:purple");
         } else if( flag == "deletelist" ) {
-            console.log(" %cDelete  ","color:red");
+//             console.log(" %cDelete  ","color:red");
         } else if ( flag == "savelist" ) {		
-            console.log(" %c Save  ","color:green");
+//             console.log(" %c Save  ","color:green");
         } else {
-            console.log(" List ");
+            console.log(list.querySelector(".list_name"));
             updateList(list.querySelector(".list_name"));
         }
     });
