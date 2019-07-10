@@ -85,6 +85,10 @@
         if ( $result->num_rows > 0 ) {
             // output data of each row
             while($row = $result->fetch_assoc()) {
+                $ldate = $row["list_date"];
+                $ldate_date = implode("-", array_reverse(explode("-",explode(" ",$ldate)[0])) );
+                $ldate_time = explode(" ",$ldate)[1];
+                $row["list_date"] = $ldate_time . " " .$ldate_date;
                 array_push($alllists,$row);
             }
             echo json_encode( array($alllists,$alltasks) );

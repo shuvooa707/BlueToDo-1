@@ -148,6 +148,7 @@ function renderlistgroup(data){
             selected = "";
         }
         var tmp_list = `<div class="list  ${selected}" data-list-id="${element.list_list_id}" >
+                        <span class="list-date">${element.list_date}</span>
                             <span class="numberTagList" onclick="updateList(this.nextElementSibling)">${++totalList}</span>
                             <span class="list_name"  onclick="updateList(this)" data-list_id="${element['list_list_id']}">${element['list_name']}</span>
                             <span class="delete_list" title="Delete Task Name" onclick="deleteList(this)">
