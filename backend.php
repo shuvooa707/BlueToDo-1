@@ -24,10 +24,11 @@
     } 
 
     elseif ( isset($_POST["op"]) && $_POST["op"] == "saveNewList") {
-        $listname = addslashes(ucfirst($_POST["listname"]));
+        $listname = addslashes(ucfirst(filter_var($_POST["listname"],FILTER_SANITIZE_STRING) ));
         $username = $_SESSION["uname"];
+        $currentTime = date("d-m-y");
         $conn->query("UPDATE list SET is_selected=0 WHERE is_selected=1 AND username='$username'");
-        $sql = "INSERT INTO `list` (`username`, `list_name`, `is_selected`) VALUES ('$username', '$listname',1)";                
+        $sql = "INSERT INTO `list` (`username`, `list_name`, `is_selected`,`list_date`) VALUES ('$username', '$listname',1,$currentTime)";                
         $conn->query($sql);
         echo (int)$conn->query("SELECT list_list_id FROM list WHERE is_selected=1 AND username='$username'")->fetch_assoc()["list_list_id"];  
     } 
@@ -85,11 +86,12 @@
         if ( $result->num_rows > 0 ) {
             // output data of each row
             while($row = $result->fetch_assoc()) {
-                $ldate = $row["list_date"];
-                $ldate_date = implode("-", array_reverse(explode("-",explode(" ",$ldate)[0])) );
-                $ldate_time = explode(" ",$ldate)[1];
-                $row["list_date"] = $ldate_time . " " .$ldate_date;
+                // $ldate = $row["list_date"];
+                // $ldate_date = implode("-", array_reverse(explode("-",explode(" ",$ldate)[0])) );
+                // $ldate_time = explode(" ",$ldate)[1];
+                // $row["list_date"] = $ldate_time . " " .$ldate_date;
                 array_push($alllists,$row);
+
             }
             echo json_encode( array($alllists,$alltasks) );
         } else {
@@ -114,7 +116,8 @@
 
     } elseif ( isset($_POST["op"]) && $_POST["op"] == "unfinished") {
         $task_id = $_POST["tasks_task_id"];
-        $taskname = addslashes($_POST["taskname"]);
+        $taskname = filter_var($_POST["taskname"],FILTER_SANITIZE_STRING);
+        echo $taskname;
         $sql = "UPDATE `tasks` SET `status`='unfinished' WHERE tasks_task_id=".$task_id;
         $result = $conn->query($sql);
 

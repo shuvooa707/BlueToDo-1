@@ -35,7 +35,12 @@
     color: rgba(0, 0, 0, 0.82);
 } 
 body{
-    overflow: hidden;
+    /* overflow: hidden; */
+    box-sizing: border-box;
+    width: 100vw;
+    background: url("img/login-page-bg.jpg");
+    background-attachment: fixed;
+    background-size: 100% 100%;
 }
 
 /* width */
@@ -353,6 +358,11 @@ button{
 /* making the check box 70% bigger */
 input[type="checkbox"]{
     transform: scale(2);
+    cursor: pointer;
+}
+input[type="checkbox"]:hover{
+    transform: scale(2.1);
+    cursor: pointer;
 }
 
 #massage{

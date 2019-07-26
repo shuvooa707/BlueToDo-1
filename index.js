@@ -213,7 +213,7 @@ function onStartUp(){
         var tasks = JSON.parse(xmlhttp.responseText)[1];
         var lists = JSON.parse(xmlhttp.responseText)[0];
         console.log(tasks);
-
+        console.log(xmlhttp.responseText);
         renderlistgroup( lists );                
         renderTasks( tasks );
                     

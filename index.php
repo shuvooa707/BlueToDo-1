@@ -20,7 +20,6 @@
     
 </head>
 <body >
-    <img src="img/login-page-bg.jpg"  id="backgroundImage">
     <div id="nav">
             <span  onclick='window.location="user.php"'><a href="user.php" title="Click to See Your Profile Page"><?php echo $_SESSION["uname"]; ?></a></span>
             <span id="signout" title="Click to Logout" onclick="signout()">Sign Out</span>
@@ -30,13 +29,13 @@
 
     <div id="listgroup-container">
         <div id="list-container-header">Your Lists</div>
-        <div id="list_container">
-            
-        </div>
         <div id="addlist" title="Click to Add a New Task" onclick="addnewlist()">
             +
         </div>
         <h4 id="clickToAddlist" class="animate1"  onclick="playNpause(this)">Click To Add A New List</h4>
+        <div id="list_container">
+            
+        </div>
     </div>
     
     <div id="container">
