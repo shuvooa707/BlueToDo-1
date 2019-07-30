@@ -117,7 +117,7 @@ img#backgroundImage{
 }
 #header{
     width: 100%;
-    background: var(--color);
+    background: #1c1b1b;
     padding: 15px 0px;
     position: sticky;
     z-index: 100;
@@ -185,7 +185,7 @@ img#backgroundImage{
     line-height: 20px;
     display: block;
     float: left;
-    background: #34195e;
+    background: #1c1b1b;
     color: #ffffff;
     border-radius: 2px;
     box-shadow: 1px 1px 1px #563d7cab;
@@ -257,7 +257,7 @@ img#backgroundImage{
     /* border: .01em solid #ffff; */
     text-align: center;
     line-height: 45px;
-    background: var(--color);
+    background: #1c1b1b;
     color: white;
     position: sticky;
     margin: 24px 12px;
