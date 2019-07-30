@@ -35,7 +35,7 @@
     color: rgba(0, 0, 0, 0.82);
 } 
 body{
-    /* overflow: hidden; */
+    overflow: hidden;
     box-sizing: border-box;
     width: 100vw;
     background: url("img/login-page-bg.jpg");
@@ -110,7 +110,7 @@ img#backgroundImage{
     background: #ffffff;
     position: relative;
     float: left;
-    top: 100px;
+    top: 50px;
     /* padding: 10px; */
     margin-left: 30px;
     transition-duration: 1s;
@@ -142,7 +142,7 @@ img#backgroundImage{
 
 .task{
     overflow: hidden;
-    border-bottom: 1px solid #bbbbbb40;
+    /* border-bottom: 1px solid #bbbbbb40; */
     transition-duration: 1s;
     min-height: 44px;
     /* height: 44px; */
@@ -359,6 +359,7 @@ button{
 input[type="checkbox"]{
     transform: scale(2);
     cursor: pointer;
+    outline: none;
 }
 input[type="checkbox"]:hover{
     transform: scale(2.1);

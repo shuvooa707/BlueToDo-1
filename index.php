@@ -20,6 +20,7 @@
     
 </head>
 <body >
+    <img src="img/login-page-bg.jpg"  id="backgroundImage">
     <div id="nav">
             <span  onclick='window.location="user.php"'><a href="user.php" title="Click to See Your Profile Page"><?php echo $_SESSION["uname"]; ?></a></span>
             <span id="signout" title="Click to Logout" onclick="signout()">Sign Out</span>
