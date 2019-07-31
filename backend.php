@@ -46,7 +46,7 @@
         // fetches all the tasks of selected list
 
         $conn->query("UPDATE list SET is_selected=0 WHERE is_selected=1 AND username='$username'");
-        $sql = "SELECT  * FROM tasks WHERE tasks_list_id=$list_id";
+        $sql = "SELECT tasks.tasks_finish_within,tasks.tasks_created_at,tasks.tasks_date,tasks.status,tasks.tasks_description,tasks.taskname,tasks.tasks_date,tasks.tasks_list_id,tasks.tasks_task_id,tasks.username,list.description FROM tasks join list ON list.list_list_id=tasks.tasks_list_id WHERE list_list_id=$list_id";
         $result = $conn->query($sql);
 
         $conn->query("UPDATE list SET is_selected=1 WHERE list_list_id=$list_id AND username='$username'");
@@ -69,7 +69,7 @@
         $sql = "SELECT list_list_id FROM list WHERE username='$uname' AND is_selected=1";
         $list_list_id = (int)$conn->query($sql)->fetch_assoc()["list_list_id"];        
         // fetches all the tasks of selected list
-        $sql = "SELECT  * FROM tasks WHERE tasks_list_id=$list_list_id";
+        $sql = "SELECT tasks.tasks_finish_within,tasks.tasks_created_at,tasks.tasks_date,tasks.status,tasks.tasks_description,tasks.taskname,tasks.tasks_date,tasks.tasks_list_id,tasks.tasks_task_id,tasks.username,list.description FROM tasks join list ON list.list_list_id=tasks.tasks_list_id WHERE list_list_id=$list_list_id";
         $result = $conn->query($sql);
         $alltasks = array();
         if ( $result->num_rows > 0 ) {
@@ -127,7 +127,11 @@
         $status = $_POST["status"];
         $sql = "INSERT INTO `tasks` (`username`, `taskname`, `status`,`tasks_list_id`) VALUES ('$uname', '$taskname', '$status','$tasks_list_id')";
         $result = $conn->query($sql);
-        echo $result;
+        if($result){            
+            $sql = "select max(tasks_task_id) from tasks where tasks_list_id=$tasks_list_id";
+            $result = $conn->query($sql)->fetch_assoc();
+            echo $result["max(tasks_task_id)"];
+        }
 
     } elseif ( isset($_POST["op"]) && $_POST["op"] == "rename") {
         $primary_key = $_POST["primary_key"];

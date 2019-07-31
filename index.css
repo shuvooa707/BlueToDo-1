@@ -32,8 +32,8 @@
 *{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     transition-duration: .2s;
-    color: rgba(0, 0, 0, 0.82);
-} 
+    color: inherit;
+}
 body{
     overflow: hidden;
     box-sizing: border-box;
@@ -173,7 +173,11 @@ img#backgroundImage{
     color:yellow;
 }
 .fuzzy{
+}
+.line-through{
+    text-decoration: line-through;
     filter:blur(1px);
+
 }
 .numberTagTask{
     border: .03em solid #563d7c;
@@ -251,17 +255,17 @@ img#backgroundImage{
 }
 #addtask{
     box-shadow: 0px 0px 5px 0px #7a6f6f;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 5px;
     /* border: .01em solid #ffff; */
     text-align: center;
-    line-height: 45px;
+    line-height: 37px;
     background: #1c1b1b;
     color: white;
     position: sticky;
-    margin: 24px 12px;
-    font-size: 57px;
+    margin: 7px 7px;
+    font-size: 46px;
     font-weight: bold;
     cursor: pointer;
     display: inline-block;
@@ -283,14 +287,18 @@ img#backgroundImage{
 #clickToAdd{
     display: inline-block;
     font-family: verdana;
-    border: .1em solid var(--color);
+    border: .1em solid black;
     /* border-bottom: 1px solid #aaa; */
-    padding: 6px 30px;
-    /* background: #a2d3b221; */
-    border-radius: 15px;
-    font-size: 13px;
-    color: var(--color);
+    padding: 3px 20px;
+    background: black;
+    /* border-radius: 15px; */
+    font-size: 12px;
+    color: white;
     cursor: cell;
+    /* margin-top: -19px; */
+    position: relative;
+    display: inline-block;
+    top: -9px;
 }
 
 #loginContainer{
@@ -375,6 +383,116 @@ input[type="checkbox"]:hover{
     animation-iteration-count: 1;
     animation-timing-function: cubic-bezier(0.6, 5.1, 1, 1);
 }
+#task-description {
+    max-height: 100px;
+    overflow: hidden;
+    width: 100%;
+    padding: 10px;
+    font-size: 12.5px;
+    box-sizing: border-box;
+    color: #7a7a7a;
+}
+
+#taskExpandOverlay {
+    width: 100vw;
+    height: 100vh;
+    background: #00000099;
+    z-index: 10000;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: none;
+}
+
+#taskExpandBody {
+    width: 400px;
+    min-height: 300px;
+    max-height: 600px;
+    padding: 20px;
+    background: white;
+    border-radius: 4px;
+    position: relative;
+    margin: 30px auto;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+#taskExpandBody > p {
+    font-size: 13px;
+}
+
+#taskExpandBody-timer {
+    width: 100%;
+    height: 60px;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    background: #7990a8;
+    /* font-size: 20px; */
+    padding-left: 10px;
+    padding-top:5px;
+    box-sizing: border-box;
+    color: white;
+    /* line-height: 60px; */
+}
+
+#taskExpandBody-timer-left {
+    width: 52%;
+    /* height: 100%; */
+    color: white;
+    border-right: 1px solid;
+    display: block;
+    box-sizing: border-box;
+    float: left;
+    text-align: center;
+}
+
+#taskExpandOverlay #status {
+    padding: 4px 6px;
+    background: orange;
+    color: black;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: bold;
+    display: inline-block;
+    position: absolute;
+    bottom: 63px;
+    left: 20px;
+    cursor: pointer;
+}
+#taskExpandOverlay #status:hover {
+    box-shadow:0px 0px 4px #4f44444f;
+}
+#taskExpandBody-timer-right {
+    width: 48%;
+    /* height: 100%; */
+    color: white;
+    display: block;
+    box-sizing: border-box;
+    float: left;
+    padding-left: 10px;
+    text-align: center;
+}
+
+#close-taskExpandBody{
+    display: block;
+    top: 4px;
+    right: 4px;
+    position: absolute;
+    /* border-radius: 50%; */
+    right: 2px;
+    top: 2px;
+    width: 22px;
+    height: 22px;
+    line-height: 20px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    border: 2px solid white;
+    background: lightcoral;
+}
+
+
 @keyframes example {
     0%   {margin-left: 0px;}
     50%   {margin-left: 100px;}

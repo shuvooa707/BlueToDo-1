@@ -215,8 +215,13 @@ function updateList( node ){
                 renderTasks(tasks);
                 // changing the header of the task list
                 document.querySelector("#header").innerText = node.innerText;
+                // highlighing the clicked List
                 changeSelectedHighlight( node );
-                console.log(node);
+                // setting the description for the list
+                var taskDescription = document.querySelector("#task-description");
+                taskDescription.innerText = tasks[0]["description"];
+                console.log(tasks);
+                
             }
             else {      
                 console.log("Tango 108");

@@ -45,7 +45,9 @@
             +
         </div>
         <h4 id="clickToAdd" class="animate2" onclick="playNpause(this)">Click To Add A New Task</h4>
-
+        <div id="task-description">
+            
+        </div>
         <div id="task_container">
             
         </div>
@@ -60,6 +62,26 @@
             <div id="msg"></div>
         </div>
     </div>
+    <div id="taskExpandOverlay">    
+        <div id="taskExpandBody">
+            <h4 id="taskExpandBody-taskname">Buy And UPS</h4>
+            <hr>
+            <div id="status" onclick="taskExpandBodyprecompleted(this.parentElement)">Pending..</div>
+            <p id="taskExpandBody-task-description">I have To buy and UPS as soon as possible I have To buy and UPS as soon as possible I have To buy and UPS as soon as possible</p>            
+            <span id="close-taskExpandBody" onclick="this.parentElement.parentElement.style.display='none'">X</span>
+            <div id="taskExpandBody-timer">
+                <div id="taskExpandBody-timer-left">
+                    <span>Should be Finished Within</span>
+                    <i style="font-size:14px;/* text-indent: 32px; *//* margin-top: 10px; */background: black;padding: 3px 8px;border-radius: 4px;display: inline-block;margin-top: 2px;" id="taskExpandBody-task-finishing-time">2019-07-31 09:58:32</i>
+                </div>
+                <div id="taskExpandBody-timer-right">                    
+                    <span>Time Left</span>
+                    <span id="timer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- scripts goes here -->
     <script src="listgroup.js"></script>
     <script src="index.js"></script>

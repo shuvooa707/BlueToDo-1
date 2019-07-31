@@ -148,19 +148,14 @@ span.list-date {
     width: 180px;
     margin-left: 10px;
     border-radius: 15px;
-    border: .2em solid #563d7c;
+    border: .1em solid black;
     transition-duration: .2s;
     padding: 7px 10px;
     color: #515151;
     font-weight: 700;
     transition-duration: .2s;
     margin-top:6px;
-}
-#editedTextList:focus{
-    width: 180px;
-    margin-left: 10px;
-    border-radius: 0px;
-    transition-duration: .2s;
+    outline: none;
 }
 
 #addlist{
@@ -201,11 +196,11 @@ span.list-date {
 #clickToAddlist{
     display: inline-block;
     font-family: verdana;
-    border: .1em solid #563d7c;
-    padding: 3px 24px;
-    border-radius: 15px;
-    font-size: 14px;
-    color: #563d7c;
+    border: .1em solid black;
+    padding: 3px 11px;
+    /* border-radius: 15px; */
+    font-size: 13px;
+    color: black;
     cursor: cell;
 }
 

@@ -4,12 +4,12 @@ totalTask = 0;
 // Creates a new Task and returns it
 function createNewTask(){
     newTask = document.querySelector("#fnode");
-    newTask.innerHTML = `<div class="task">
+    newTask.innerHTML = `<div class="task" data-task-description="Add a short description">
                             <span class="done ">
                                 <input type="checkbox" onclick="completed(this)">
                             </span>
                             <span class="numberTagTask">${++totalTask}</span>
-                            <span class="task_name" onclick="precompleted(this)"></span>
+                            <span class="task_name" onclick="expandTask(this)"></span>
                             <span class="delete_task" title="Delete Task Name" onclick="deleteTask(this)">
                                 <svg viewBox="0 0 24 24" id="ic_delete_24px" width="100%" height="100%"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path></svg>
                             </span>
@@ -25,14 +25,14 @@ function createNewTask(){
     return newTask;
 }
 // check the task on being clicked on the name of the task
-function precompleted( elem ) {
+function expandTask( elem ) {
     elem.parentElement.querySelector("input[type='checkbox']").click();
 }
 
 function completed(elem){        
     var r = elem.parentElement.parentElement.querySelector(".task_name"); // clicked task
     if( elem.checked ){
-        r.innerHTML = "<del class='fuzzy'>" + r.innerHTML + "</del>";
+        r.classList.add("line-through");
         elem.parentElement.parentElement.querySelector(".edit_task").style.display = "none";
         updateOnline("complete",elem.parentElement.parentElement);
 
@@ -40,7 +40,8 @@ function completed(elem){
         // completed task bring aside in the task list
         aside_completed_task(elem.parentElement.parentElement,"DOWN");
     } else {
-        r.innerHTML = r.innerText;
+        
+        r.classList.remove("line-through");
         elem.parentElement.parentElement.querySelector(".edit_task").style.display = "inline-block";
         updateOnline("unfinished",elem.parentElement.parentElement);
 
@@ -162,7 +163,7 @@ function save(elem){
     var Class = document.createAttribute("class");
     var onclick = document.createAttribute("onclick");
     Class.value = "task_name";
-    onclick.value = "precompleted(this)";
+    onclick.value = "expandTask(this)";
     span.setAttributeNode(Class);
     span.setAttributeNode(onclick);
     span.innerText = editedText.value; ///.substr(0,35);
@@ -188,7 +189,7 @@ function update(elem) {
     var Class = document.createAttribute("class");
     var onclick = document.createAttribute("onclick");
     Class.value = "task_name";
-    onclick.value = "precompleted(this)";
+    onclick.value = "expandTask(this)";
     span.setAttributeNode(Class);
     span.setAttributeNode(onclick);
     span.innerText = editedText.value; ///.substr(0,35);
@@ -212,10 +213,13 @@ function onStartUp(){
     if( xmlhttp.responseText.length > 5){
         var tasks = JSON.parse(xmlhttp.responseText)[1];
         var lists = JSON.parse(xmlhttp.responseText)[0];
-        console.log(tasks);
-        console.log(xmlhttp.responseText);
+        // console.log(tasks);
         renderlistgroup( lists );                
         renderTasks( tasks );
+        
+        // setting the description for the list
+        var taskDescription = document.querySelector("#task-description");
+        taskDescription.innerText = tasks[0]["description"] || "";
                     
     } else {
         // if response does not come then prints it on console window
@@ -244,18 +248,17 @@ function renderTasks(tasks){
     .forEach((element) => {
         if( element["status"] == "done" ){
             status = "checked";
-            tname = `<span class="task_name" onclick="precompleted(this)"><del class='fuzzy'>${element["taskname"]}</del></span>`;
+            tname = `<span class="task_name line-through" onclick="expandTask(this)">${element["taskname"]}</span>`;
         } else {
             status = "";
-            tname = `<span class="task_name" onclick="precompleted(this)">${element["taskname"]}</span>`;
+            tname = `<span class="task_name" onclick="expandTask(this)">${element["taskname"]}</span>`;
         }
-        var tmp_task = `<div class="task" data-task-id="${element.tasks_task_id}">
+        var tmp_task = `<div class="task" data-task-id="${element.tasks_task_id}"   data-task-description="${element.tasks_description || 0}" data-task-finishing-time="${element.tasks_finish_within}">
                             <span class="done">
                                 <input type="checkbox" onclick="completed(this)" ${status}>
                             </span>
                             <span class="numberTagTask" >${++totalTask}</span>
-                            ${tname
-                            }
+                            ${tname}
                             <span class="delete_task" title="Delete Task Name" onclick="deleteTask(this)">
                                 <svg viewBox="0 0 24 24" id="ic_delete_24px" width="100%" height="100%"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path></svg>
                             </span>
@@ -316,7 +319,12 @@ function updateOnline(operation,elem,taskNameOld) {
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlhttp.send(sql_operation);
     //console.log(sql_operation);
-    console.trace();
+    // n("")
+
+    if( operation == "save" ) {
+        elem.setAttribute("data-task-id",parseInt(xmlhttp.responseText));
+    }
+    console.log(parseInt(xmlhttp.responseText));
 }
 
 
@@ -388,6 +396,71 @@ function appear( node, transition ) {
         node.style.opacity = "1";
         node.style.height = "44px";    
     },1);
+}
+
+
+
+function expandTask( task ) {
+     console.log(task);
+    var taskExpandBodyTaskName = document.querySelector("#taskExpandBody-taskname");
+    var taskExpandBodyTaskDescription = document.querySelector("#taskExpandBody-task-description");
+    var taskExpandBodyFinishingTime = document.querySelector("#taskExpandBody-task-finishing-time");
+    taskExpandBodyTaskName.innerHTML = task.innerHTML;
+    if( task.classList.contains("line-through") ){
+        taskExpandBodyTaskName.classList.add("line-through");
+    } else {
+        taskExpandBodyTaskName.classList.remove("line-through");
+    }
+    var description = task.parentElement.getAttributeNode("data-task-description").value && task.parentElement.getAttributeNode("data-task-description").value !="0" ? task.parentElement.getAttributeNode("data-task-description").value : "Add a short description <span style='font-weight:bold; cursor:pointer; color:white;background:black; border-radius:3px; padding:2px 4px;'>+</span>";
+    var finishingTime = task.parentElement.getAttributeNode("data-task-finishing-time").value;
+    taskExpandBodyFinishingTime.innerText = finishingTime;
+    taskExpandBodyTaskDescription.innerHTML = description;
+    document.querySelector("#taskExpandOverlay").style.display = "block";
+    var data_task_id = task.parentElement.getAttributeNode("data-task-id").value;
+    console.log(data_task_id);
+    var dtid = document.createAttribute("data-task-id");
+    dtid.value = data_task_id;
+    document.querySelector("#taskExpandBody").setAttributeNode(dtid);
+    timer(finishingTime);
+    function timer(time) {
+        finishingTime = new Date(time);
+        var now = new Date();
+        var timerTime = document.querySelector("#taskExpandBody-timer-right #timer");
+        timerTime.innerText = "";
+    }
+}
+
+function taskExpandBodyprecompleted(node) {
+    let dtid = node.getAttributeNode("data-task-id").value;
+    let tasks = document.querySelectorAll(".task");
+    let task = tasks.forEach((e)=>{
+        var ti = e.getAttributeNode("data-task-id").value;
+        if( ti == dtid ) {
+            // console.log(e.querySelector("input[type='checkbox']"));
+            e.querySelector("input[type='checkbox']").click();
+            var status = n("#taskExpandBody #status");
+            var taskExpandBodyTaskName = n("#taskExpandBody-taskname");
+            var finishedOrNot = n("#taskExpandBody-timer-right > span");
+
+            taskExpandBodyTaskName.classList.toggle("line-through");
+            if( finishedOrNot.innerText == "Finished At" ) {
+                finishedOrNot.innerText = "Time Left";
+                status.style.background = "orange";
+                status.style.color = "black";
+                status.innerText = "Pending..";
+            } else {
+                finishedOrNot.innerText = "Finished At";     
+                status.style.background = "green";
+                status.style.color = "white";
+                status.innerText = "Done";           
+            }
+        }
+    });
+}
+
+
+function n(id) {
+    return document.querySelector(id);
 }
 
 
