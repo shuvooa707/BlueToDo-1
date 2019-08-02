@@ -148,6 +148,20 @@
         echo $sql;
         $result = $conn->query($sql);
 
+    } elseif ( isset($_POST["op"]) && $_POST["op"] == "updateTask") {
+        $tasks_task_id = $_POST["tasks_task_id"];
+        $tasknameNew = addslashes($_POST["tasknamenew"]);
+        $taskDescription = addslashes($_POST["taskDescription"]);
+        $taskFinishingDate = addslashes($_POST["taskFinishingDate"]);
+        $sql = "UPDATE `tasks` SET `taskname`='$tasknameNew',`tasks_finish_within`='$taskFinishingDate',`tasks_description`='$taskDescription' WHERE `tasks_task_id`=$tasks_task_id";        
+        $result = $conn->query($sql);
+        if( !$result ) {
+            echo "Something Went Worng!! Here Is the Query \n";
+            echo $sql;
+        } else {
+            echo "Congo! Task Updated";
+        }
+
     } elseif ( isset($_POST["op"]) && $_POST["op"] == "deleteAccount" ) {
         # code...
         $user = $_SESSION["uname"];

@@ -64,15 +64,15 @@
     </div>
     <div id="taskExpandOverlay">    
         <div id="taskExpandBody">
-            <h4 id="taskExpandBody-taskname">Buy And UPS</h4>
+            <h4 id="taskExpandBody-taskname" onclick="GKEdit(this,'taskname')">Buy And UPS</h4>
             <hr>
             <div id="status" onclick="taskExpandBodyprecompleted(this.parentElement)">Pending..</div>
-            <p id="taskExpandBody-task-description">I have To buy and UPS as soon as possible I have To buy and UPS as soon as possible I have To buy and UPS as soon as possible</p>            
+            <p id="taskExpandBody-task-description" onclick="GKEdit(this,'description')">I have To buy and UPS as soon as possible I have To buy and UPS as soon as possible I have To buy and UPS as soon as possible</p>            
             <span id="close-taskExpandBody" onclick="this.parentElement.parentElement.style.display='none'">X</span>
             <div id="taskExpandBody-timer">
                 <div id="taskExpandBody-timer-left">
                     <span>Should be Finished Within</span>
-                    <i style="font-size:14px;/* text-indent: 32px; *//* margin-top: 10px; */background: black;padding: 3px 8px;border-radius: 4px;display: inline-block;margin-top: 2px;" id="taskExpandBody-task-finishing-time">2019-07-31 09:58:32</i>
+                    <i  onclick="GKEdit(this,'finishingTime')" style="font-size:14px;/* text-indent: 32px; *//* margin-top: 10px; */background: black;padding: 3px 8px;border-radius: 4px;display: inline-block;margin-top: 2px;" id="taskExpandBody-task-finishing-time">2019-07-31 09:58:32</i>
                 </div>
                 <div id="taskExpandBody-timer-right">                    
                     <span>Time Left</span>

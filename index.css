@@ -1,46 +1,23 @@
-:root{
-    --indigo: #6610f2;
-    --blue:#007bff;
-    --indigo:#6610f2;
-    --purple:#6f42c1;
-    --pink:#e83e8c;
-    --red:#dc3545;
-    --orange:#fd7e14;
-    --yellow:#ffc107;
-    --green:#28a745;
-    --teal:#20c997;
-    --cyan:#17a2b8;
-    --white:#fff;
-    --gray:#6c757d;
-    --gray-dark:#343a40;
-    --primary:#007bff;
-    --secondary:#6c757d;
-    --success:#28a745;
-    --info:#17a2b8;
-    --warning:#ffc107;
-    --danger:#dc3545;
-    --light:#f8f9fa;
-    --dark:#343a40;
-    --breakpoint-xs:0;
-    --breakpoint-sm:576px;
-    --breakpoint-md:768px;
-    --breakpoint-lg:992px;
-    --breakpoint-xl:1200px;
+:root {
+    --indigo: #6610f2; --blue:#007bff; --indigo:#6610f2; --purple:#6f42c1; --pink:#e83e8c; --red:#dc3545; --orange:#fd7e14; --yellow:#ffc107; --green:#28a745; --teal:#20c997; --cyan:#17a2b8; --white:#fff; --gray:#6c757d; --gray-dark:#343a40; --primary:#007bff; --secondary:#6c757d; --success:#28a745; --info:#17a2b8; --warning:#ffc107; --danger:#dc3545; --light:#f8f9fa; --dark:#343a40; --breakpoint-xs:0; --breakpoint-sm:576px; --breakpoint-md:768px; --breakpoint-lg:992px; --breakpoint-xl:1200px; --color:#34195e; }
 
-    --color:#34195e;
-}
-*{
+* {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     transition-duration: .2s;
     color: inherit;
 }
-body{
+
+body {
     overflow: hidden;
     box-sizing: border-box;
     width: 100vw;
     background: url("img/login-page-bg.jpg");
     background-attachment: fixed;
     background-size: 100% 100%;
+}
+
+button {
+    outline: none;
 }
 
 /* width */
@@ -50,26 +27,27 @@ body{
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
+    background: #f1f1f1;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #0000003d; 
-    border-radius:6px;
+    background: #0000003d;
+    border-radius: 6px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #5556; 
+    background: #5556;
 }
 
-::selection{
-    color:white;
-    background:green;
+::selection {
+    color: white;
+    background: green;
 }
+
 /* ----- background image styling ----- */
-img#backgroundImage{
+img#backgroundImage {
     width: 100%;
     height: 100%;
     object-fit: fill;
@@ -79,7 +57,7 @@ img#backgroundImage{
     z-index: -100;
 }
 
-#userPlate{
+#userPlate {
     width : 180px;
     height: 100px;
     background: #eaeaea;
@@ -90,6 +68,7 @@ img#backgroundImage{
     box-shadow: 1px 1px 10px #aaaaaa36;
     margin-bottom: 10px;
 }
+
 #userPlate p {
     margin: 0px;
     padding: 10px 0px;
@@ -97,8 +76,7 @@ img#backgroundImage{
     color: #0000ffbf;
 }
 
-
-#container{
+#container {
     margin-bottom: 50px;
     border: .1em solid #563d7c;
     /* border-radius: 10px; */
@@ -115,7 +93,8 @@ img#backgroundImage{
     margin-left: 30px;
     transition-duration: 1s;
 }
-#header{
+
+#header {
     width: 100%;
     background: #1c1b1b;
     padding: 15px 0px;
@@ -127,20 +106,22 @@ img#backgroundImage{
     color: #ffffff;
     text-align: center;
 }
-#task_container{
+
+#task_container {
     border-top: 1px solid #0000001f;
     width: 100%;
     height: 450px;
     overflow: auto;
 }
-.task:nth-child(even){
-    background:#f8fcffe6;
-}
-.task:nth-child(odd){
-    
+
+.task:nth-child(even) {
+    background: #f8fcffe6;
 }
 
-.task{
+.task:nth-child(odd) {
+}
+
+.task {
     overflow: hidden;
     /* border-bottom: 1px solid #bbbbbb40; */
     transition-duration: 1s;
@@ -148,10 +129,12 @@ img#backgroundImage{
     /* height: 44px; */
     max-height: 150px;
 }
+
 .task:last-child {
     border-bottom: 0;
 }
-.done{
+
+.done {
     padding: 10px 10px;
     /* box-sizing: border-box; */
     display: inline-block;
@@ -159,7 +142,8 @@ img#backgroundImage{
     /* border-right: 1px solid #bbbbbb40; */
     margin: 4px;
 }
-.task_name{
+
+.task_name {
     font-size: 14.5px;
     font-family: sans-serif;
     text-align: center;
@@ -169,17 +153,20 @@ img#backgroundImage{
     height: auto;
     cursor: pointer;
 }
-.task_name:active{
-    color:yellow;
-}
-.fuzzy{
-}
-.line-through{
-    text-decoration: line-through;
-    filter:blur(1px);
 
+.task_name:active {
+    color: yellow;
 }
-.numberTagTask{
+
+.fuzzy {
+}
+
+.line-through {
+    text-decoration: line-through;
+    filter: blur(1px);
+}
+
+.numberTagTask {
     border: .03em solid #563d7c;
     cursor: pointer;
     width: 24px;
@@ -194,7 +181,8 @@ img#backgroundImage{
     border-radius: 2px;
     box-shadow: 1px 1px 1px #563d7cab;
 }
-.edit_task{
+
+.edit_task {
     cursor: pointer;
     width: 22px;
     height: 22px;
@@ -203,14 +191,16 @@ img#backgroundImage{
     float: right;
     background-size: contain;
     position: relative;
-    opacity:.5;
-    transition-duration:.6s;
+    opacity: .5;
+    transition-duration: .6s;
 }
-.edit_task:hover{
-    opacity:1;
-    transform:rotate(360deg);
+
+.edit_task:hover {
+    opacity: 1;
+    transform: rotate(360deg);
 }
-.delete_task{
+
+.delete_task {
     cursor: pointer;
     width: 22px;
     height: 22px;
@@ -220,16 +210,18 @@ img#backgroundImage{
     background-size: cover;
     position: relative;
     right: 0px;
-    opacity:.5;
-    transition-duration:.6s;    
+    opacity: .5;
+    transition-duration: .6s;
 }
-.delete_task:hover{
+
+.delete_task:hover {
     width: 22px;
     height: 22px;
-    opacity:1;
-    transform:scale(1.1) rotate(360deg);
+    opacity: 1;
+    transform: scale(1.1) rotate(360deg);
 }
-.save{
+
+.save {
     box-sizing: border-box;
     border: 1.5px solid var(--color);
     cursor: pointer;
@@ -249,11 +241,12 @@ img#backgroundImage{
     border-radius: 0;
 }
 
-.save:hover{
+.save:hover {
     background: var(--color);
     color: white;
 }
-#addtask{
+
+#addtask {
     box-shadow: 0px 0px 5px 0px #7a6f6f;
     width: 40px;
     height: 40px;
@@ -271,9 +264,13 @@ img#backgroundImage{
     display: inline-block;
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
-#addlist:hover,#addtask:hover {color: var(--color);background: white;}
 
-#editedText{
+#addlist:hover,#addtask:hover {
+    color: var(--color);
+    background: white;
+}
+
+#editedText {
     width: 250px;
     margin-left: 10px;
     border-radius: 15px;
@@ -284,7 +281,7 @@ img#backgroundImage{
     /* font-weight: 700; */
 }
 
-#clickToAdd{
+#clickToAdd {
     display: inline-block;
     font-family: verdana;
     border: .1em solid black;
@@ -301,7 +298,7 @@ img#backgroundImage{
     top: -9px;
 }
 
-#loginContainer{
+#loginContainer {
     box-shadow: 1px 1px solid #aaa;
     border: .1em solid #000000;
     border-radius: 4px;
@@ -314,10 +311,12 @@ img#backgroundImage{
     transform: translate(-50%, -80%);
     /* border-radius: 20px; */
 }
-#loginContainer > div{
+
+#loginContainer > div {
     padding: 20px 50px;
 }
-#userName{
+
+#userName {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 15px;
     /* color: white; */
@@ -329,7 +328,8 @@ img#backgroundImage{
     padding: 8px 10px;
     /* background: #1e90ff85; */
 }
-#password{
+
+#password {
     width: 250px;
     /* border-radius: 20px; */
     border: 0px;
@@ -339,50 +339,56 @@ img#backgroundImage{
     margin-bottom: 10px;
     display: block;
 }
-#userName:focus,#password:focus{
+
+#userName:focus,#password:focus {
     /* border-radius: 0px; */
     /* border: .1em solid orange; */
 }
-label{
+
+label {
     display: block;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    margin-top:10px;
-    margin-bottom:5px;
+    margin-top: 10px;
+    margin-bottom: 5px;
     color: white;
 }
-button{
+
+button {
     color: var(--color);
     padding: 10px 43px;
     /* background: yellow; */
     border: 0px;
-    margin-bottom:5px;
-    margin-top:10px;
+    margin-bottom: 5px;
+    margin-top: 10px;
     display: inline-block;
     /* border-radius: 25px; */
     cursor: pointer;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 14px;
 }
+
 /* making the check box 70% bigger */
-input[type="checkbox"]{
+input[type="checkbox"] {
     transform: scale(2);
     cursor: pointer;
     outline: none;
 }
-input[type="checkbox"]:hover{
+
+input[type="checkbox"]:hover {
     transform: scale(2.1);
     cursor: pointer;
 }
 
-#massage{
+#massage {
 }
 
-.animate1{
+.animate1 {
     animation-name: example;
     animation-duration: 1s;
     animation-iteration-count: 1;
     animation-timing-function: cubic-bezier(0.6, 5.1, 1, 1);
 }
+
 #task-description {
     max-height: 100px;
     overflow: hidden;
@@ -397,7 +403,7 @@ input[type="checkbox"]:hover{
     width: 100vw;
     height: 100vh;
     background: #00000099;
-    z-index: 10000;
+    z-index: 1001;
     position: absolute;
     top: 0px;
     left: 0px;
@@ -413,12 +419,13 @@ input[type="checkbox"]:hover{
     border-radius: 4px;
     position: relative;
     margin: 30px auto;
-    z-index: 1000;
+    z-index: 100;
     overflow: hidden;
 }
 
 #taskExpandBody > p {
     font-size: 13px;
+    color: #676767;
 }
 
 #taskExpandBody-timer {
@@ -430,7 +437,7 @@ input[type="checkbox"]:hover{
     background: #7990a8;
     /* font-size: 20px; */
     padding-left: 10px;
-    padding-top:5px;
+    padding-top: 5px;
     box-sizing: border-box;
     color: white;
     /* line-height: 60px; */
@@ -460,9 +467,11 @@ input[type="checkbox"]:hover{
     left: 20px;
     cursor: pointer;
 }
+
 #taskExpandOverlay #status:hover {
-    box-shadow:0px 0px 4px #4f44444f;
+    box-shadow: 0px 0px 4px #4f44444f;
 }
+
 #taskExpandBody-timer-right {
     width: 48%;
     /* height: 100%; */
@@ -474,7 +483,7 @@ input[type="checkbox"]:hover{
     text-align: center;
 }
 
-#close-taskExpandBody{
+#close-taskExpandBody {
     display: block;
     top: 4px;
     right: 4px;
@@ -492,13 +501,21 @@ input[type="checkbox"]:hover{
     background: lightcoral;
 }
 
-
 @keyframes example {
-    0%   {margin-left: 0px;}
-    50%   {margin-left: 100px;}
-    100% {margin-left: 0px;}
+    0% {
+        margin-left: 0px;
+    }
+
+    50% {
+        margin-left: 100px;
+    }
+
+    100% {
+        margin-left: 0px;
+    }
 }
-.animate2{
+
+.animate2 {
     animation-name: example2;
     animation-duration: 1s;
     animation-iteration-count: 3;
@@ -506,21 +523,30 @@ input[type="checkbox"]:hover{
 }
 
 @keyframes example2 {
-    0%   {margin-left: 0px;}
-    50%   {margin-left: 75px;}
-    100% {margin-left: 0px;}
+    0% {
+        margin-left: 0px;
+    }
+
+    50% {
+        margin-left: 75px;
+    }
+
+    100% {
+        margin-left: 0px;
+    }
 }
 
-
-@media only screen and (max-width:320px){
-    *{
+@media only screen and (max-width: 320px) {
+    * {
         font-family: Verdana, Geneva, Tahoma, sans-serif;
-    } 
-    #container{
+    }
+
+    #container {
         position: relative;
         margin-left: 10px;
     }
-    #listgroup-container{
+
+    #listgroup-container {
         position: relative;
         margin-left: 10px;
     }
