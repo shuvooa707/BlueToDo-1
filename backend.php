@@ -109,7 +109,7 @@
         $tasks_task_id = $_POST["tasks_task_id"];
         $sql = "DELETE FROM `tasks` WHERE tasks_task_id=$tasks_task_id";
         $result = $conn->query($sql);
-        $result ? printf("deleteSuccess") : printf($result);
+        $result ? printf('{"respnseStatus":"deleteSuccess"}') : printf($result);
     } elseif ( isset($_POST["op"]) && $_POST["op"] == "complete") {
         $task_id = $_POST["tasks_task_id"];
         $sql = "UPDATE `tasks` SET `status`='done' WHERE tasks_task_id=".$task_id;
@@ -133,8 +133,8 @@
         if($result){            
             $sql = "select max(tasks_task_id) from tasks where tasks_list_id=$tasks_list_id";
             $result = $conn->query($sql)->fetch_assoc();
-            // echo $result["max(tasks_task_id)"];
-            echo "saveSuccess";
+            $taskId = $result["max(tasks_task_id)"];
+            echo '{"respnseStatus":"saveSuccess","taskId":'.$taskId.'}';
         }
 
     } elseif ( isset($_POST["op"]) && $_POST["op"] == "rename") {
@@ -148,9 +148,11 @@
         $tasks_task_id = $_POST["tasks_task_id"];
         $tasknameOld = addslashes($_POST["tasknameold"]);
         $tasknameNew = addslashes($_POST["tasknamenew"]);
-        $sql = "UPDATE `tasks` SET `taskname`='$tasknameNew' WHERE `tasks_task_id`=$tasks_task_id";        
-        echo $sql;
+        $sql = "UPDATE `tasks` SET `taskname`='$tasknameNew' WHERE `tasks_task_id`=$tasks_task_id";  
         $result = $conn->query($sql);
+        if( $result ) {
+            echo '{"respnseStatus":"renameSuccess"}';
+        }
 
     } elseif ( isset($_POST["op"]) && $_POST["op"] == "updateTask") {
         $tasks_task_id = $_POST["tasks_task_id"];

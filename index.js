@@ -16,7 +16,7 @@ function createNewTask() {
                             <span class="edit_task"  title="Edit Task Name" onclick="editTask(this,'update')">
                                 <svg viewBox="0 0 24 24" id="ic_edit_24px" width="100%" height="100%"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>
                             </span>                
-                            <span class="save" title="Click To Save" onclick="save(this)">Save</span>                
+                            <span class="save saveTask" title="Click To Save" onclick="save(this)">Save</span>                
                         </div>`;
 
     newTask = document.querySelector("#fnode");
@@ -154,7 +154,10 @@ function editTask(elem, operation) {
 }
 
 function save(elem) {
-
+    var saveTask = document.querySelector(".saveTask");
+    saveTask.onclick = function(){
+        update(saveTask);
+    }
     // If there is no text entered in other words
     // if the no input is given
     var p = elem.parentElement;
@@ -183,7 +186,7 @@ function save(elem) {
 
 }
 function update(elem) {
-
+    console.log(elem.parentElement);
     var p = elem.parentElement;
     var editedText = p.querySelector("#editedText");
     if (editedText.value.length < 1) {
@@ -331,11 +334,12 @@ function updateOnline(operation, elem, taskNameOld) {
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlhttp.send(sql_operation);
     
-    if( xmlhttp.responseText == "saveSuccess" ) {
+    var respnseStatus = JSON.parse(xmlhttp.responseText)["respnseStatus"] || "";
+    if( respnseStatus == "saveSuccess" ) {
         var numberTagList = document.querySelector(".selected").querySelector(".numberTagList");
         numberTagList.innerText = parseInt(numberTagList.innerText) + 1;
     }
-    if( xmlhttp.responseText == "deleteSuccess" ) {
+    if( respnseStatus == "deleteSuccess" ) {
         var numberTagList = document.querySelector(".selected").querySelector(".numberTagList");
         numberTagList.innerText = parseInt(numberTagList.innerText) - 1;
     }
@@ -344,7 +348,8 @@ function updateOnline(operation, elem, taskNameOld) {
     // n("")
 
     if (operation == "save") {
-        elem.setAttribute("data-task-id", parseInt(xmlhttp.responseText));
+        var taskId = JSON.parse(xmlhttp.responseText)["taskId"] || "";
+        elem.setAttribute("data-task-id", parseInt(taskId));
     }
     console.log(parseInt(xmlhttp.responseText));
 }
