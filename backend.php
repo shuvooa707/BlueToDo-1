@@ -46,7 +46,7 @@
         // fetches all the tasks of selected list
 
         $conn->query("UPDATE list SET is_selected=0 WHERE is_selected=1 AND username='$username'");
-        $sql = "SELECT tasks.tasks_finish_within,tasks.tasks_created_at,tasks.tasks_date,tasks.status,tasks.tasks_description,tasks.taskname,tasks.tasks_date,tasks.tasks_list_id,tasks.tasks_task_id,tasks.username,list.description FROM tasks join list ON list.list_list_id=tasks.tasks_list_id WHERE list_list_id=$list_id";
+        $sql = "SELECT tasks.tasks_finish_within,tasks.tasks_created_at,tasks.tasks_date,tasks.status,tasks.tasks_description,tasks.taskname,tasks.tasks_date,tasks.tasks_list_id,tasks.tasks_task_id,tasks.username,list.description FROM tasks join list ON list.list_list_id=tasks.tasks_list_id WHERE list_list_id=$list_id order by  tasks_created_at desc";
         $result = $conn->query($sql);
 
         $conn->query("UPDATE list SET is_selected=1 WHERE list_list_id=$list_id AND username='$username'");
@@ -64,12 +64,13 @@
     }
     
 
-    if ( isset($_POST["operation"]) && $_POST["operation"] == "getListPostOnStartUp" ) {        
+    if ( isset($_POST["operation"]) && $_POST["operation"] == "getListPostOnStartUp" ) {
         // get the primary key
         $sql = "SELECT list_list_id FROM list WHERE username='$uname' AND is_selected=1";
         $list_list_id = (int)$conn->query($sql)->fetch_assoc()["list_list_id"];        
         // fetches all the tasks of selected list
-        $sql = "SELECT tasks.tasks_finish_within,tasks.tasks_created_at,tasks.tasks_date,tasks.status,tasks.tasks_description,tasks.taskname,tasks.tasks_date,tasks.tasks_list_id,tasks.tasks_task_id,tasks.username,list.description FROM tasks join list ON list.list_list_id=tasks.tasks_list_id WHERE list_list_id=$list_list_id";
+        $sql = "SELECT tasks.tasks_finish_within,tasks.tasks_created_at,tasks.tasks_date,tasks.status,tasks.tasks_description,tasks.taskname,tasks.tasks_date,tasks.tasks_list_id,tasks.tasks_task_id,tasks.username,list.description FROM tasks join list ON list.list_list_id=tasks.tasks_list_id WHERE list_list_id=$list_list_id order by  tasks_created_at desc";
+        // echo $sql;
         $result = $conn->query($sql);
         $alltasks = array();
         if ( $result->num_rows > 0 ) {
@@ -90,6 +91,8 @@
                 // $ldate_date = implode("-", array_reverse(explode("-",explode(" ",$ldate)[0])) );
                 // $ldate_time = explode(" ",$ldate)[1];
                 // $row["list_date"] = $ldate_time . " " .$ldate_date;
+                $list_id = $row["list_list_id"];
+                $row["number_of_tasks"] = $conn->query("SELECT count(*) AS number_of_tasks FROM tasks WHERE tasks.tasks_list_id ='$list_id'")->fetch_assoc()["number_of_tasks"];
                 array_push($alllists,$row);
 
             }
@@ -106,12 +109,12 @@
         $tasks_task_id = $_POST["tasks_task_id"];
         $sql = "DELETE FROM `tasks` WHERE tasks_task_id=$tasks_task_id";
         $result = $conn->query($sql);
-        $result ? printf("task deleted") : printf($result);
+        $result ? printf("deleteSuccess") : printf($result);
     } elseif ( isset($_POST["op"]) && $_POST["op"] == "complete") {
         $task_id = $_POST["tasks_task_id"];
         $sql = "UPDATE `tasks` SET `status`='done' WHERE tasks_task_id=".$task_id;
         $result = $conn->query($sql);
-        $sql = "SELECT * FROM tasks ORDER BY status ASC";
+        $sql = "SELECT * FROM tasks ORDER BY tasks_created_at";
         $result = $conn->query($sql);
 
     } elseif ( isset($_POST["op"]) && $_POST["op"] == "unfinished") {
@@ -130,7 +133,8 @@
         if($result){            
             $sql = "select max(tasks_task_id) from tasks where tasks_list_id=$tasks_list_id";
             $result = $conn->query($sql)->fetch_assoc();
-            echo $result["max(tasks_task_id)"];
+            // echo $result["max(tasks_task_id)"];
+            echo "saveSuccess";
         }
 
     } elseif ( isset($_POST["op"]) && $_POST["op"] == "rename") {

@@ -29,6 +29,11 @@ function createnewList(){
 
 // This function *Create new div.list element and returns back*
 function addnewlist(nodeToBeAdded){
+
+    // to focus the input field
+    n("#list_container").scrollBy(0,-n("#list_container").scrollTop);
+
+    
     // onpageload this if block takes the list that are in 
     // database and puts them in div#list_container element
     if(nodeToBeAdded){
@@ -140,16 +145,12 @@ function saveList(elem){
 // This function fetches data from database
 // inersts them into the list
 function renderlistgroup(data){
-
+    console.log(data);
+    highlightedElement = "";
     data.forEach((element) => {
-        if( parseInt(element.is_selected) ){
-            selected = "selected";
-        } else {
-            selected = "";
-        }
-        var tmp_list = `<div class="list  ${selected}" data-list-id="${element.list_list_id}" >
+        var tmp_list = `<div class="list" data-list-id="${element.list_list_id}" >
                         <span class="list-date">${element.list_date}</span>
-                            <span class="numberTagList" onclick="updateList(this.nextElementSibling)">${++totalList}</span>
+                            <span class="numberTagList" onclick="updateList(this.nextElementSibling)">${ element.number_of_tasks }</span>
                             <span class="list_name"  onclick="updateList(this)" data-list_id="${element['list_list_id']}">${element['list_name']}</span>
                             <span class="delete_list" title="Delete Task Name" onclick="deleteList(this)">
                                 <svg viewBox="0 0 24 24" id="ic_delete_24px" width="100%" height="100%"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path></svg>
@@ -167,8 +168,14 @@ function renderlistgroup(data){
 //         attachEvents(tmp_list);
         // calling the addnewlist function which
         // inserts all the list into the DOM 
-        addnewlist(tmp_list);        
+        addnewlist(tmp_list); 
+        if( parseInt(element.is_selected) ){
+            highlightedElement = tmp_list;
+        }       
     });    
+    // console.log(highlightedElement);
+    // highlighting the list on page load
+    highlightedElement.querySelector(".list_name").click();
 
     return 1;
 }
@@ -286,3 +293,6 @@ function changeSelectedHighlight( node ){
 }
 
 
+function findSelectedList() {
+    
+}

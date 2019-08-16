@@ -8,10 +8,13 @@
 }
 
 body {
-    overflow: hidden;
+    display: flex;
+    justify-content: space-evenly;
+    overflow-x: hidden;
+    /* overflow: hidden; */
     box-sizing: border-box;
     width: 100vw;
-    background: url("img/login-page-bg.jpg");
+    /* background: url("img/login-page-bg.jpg"); */
     background-attachment: fixed;
     background-size: 100% 100%;
 }
@@ -77,32 +80,44 @@ img#backgroundImage {
 }
 
 #container {
-    margin-bottom: 50px;
+    /* margin-bottom: 50px; */
     border: .1em solid #563d7c;
-    /* border-radius: 10px; */
+    border-radius: 10px;
     /* box-shadow: inset 0px 2px 20px 0px #5c59598f; */
     width: 500px;
-    min-height: 130px;
-    max-height: 80vh;
+    height: 600px;
+    /* max-height: 80vh; */
     overflow: hidden;
     background: #ffffff;
     position: relative;
-    float: left;
-    top: 50px;
+    /* float: left; */
     /* padding: 10px; */
-    margin-left: 30px;
+    padding-bottom: 40px;
+    margin-left: -250px;
+    margin-top: 60px;
+    /* margin-bottom: 50px; */
     transition-duration: 1s;
+    overflow:hidden;
+}
+#container::after{
+    content:"";
+    width: 100%;
+    height:40px;
+    background:#1c1b1b;
+    position:absolute;
+    bottom: 0px;
 }
 
 #header {
     width: 100%;
     background: #1c1b1b;
-    padding: 15px 0px;
+    padding: 15px 20px;
+    box-sizing: border-box;
     position: sticky;
     z-index: 100;
     margin: 0px;
     top: -2px;
-    font-size: x-large;
+    font-size: large;
     color: #ffffff;
     text-align: center;
 }
@@ -110,7 +125,7 @@ img#backgroundImage {
 #task_container {
     border-top: 1px solid #0000001f;
     width: 100%;
-    height: 450px;
+    height: 445px;
     overflow: auto;
 }
 
@@ -375,8 +390,21 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:hover {
-    transform: scale(2.1);
+    transform: scale(2.1) rotate(0deg);
     cursor: pointer;
+    animation: shaker .35s cubic-bezier(0.18, 0.89, 0.32, 1.28) infinite;
+}
+
+@keyframes shaker{
+    0%{
+        transform:scale(2.1);
+    }
+    50%{
+        transform:scale(2.25);
+    }
+    100%{
+        transform:scale(2.1);
+    }
 }
 
 #massage {

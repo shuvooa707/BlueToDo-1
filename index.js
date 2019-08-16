@@ -4,7 +4,7 @@ totalTask = 0;
 // Creates a new Task and returns it
 function createNewTask() {
     newTask = document.querySelector("#fnode");
-    newTask.innerHTML = `<div class="task" data-task-description="Add a short description">
+    newTask.innerHTML = `<div class="task" data-task-finishing-time="null" data-task-description="Add a short description">
                             <span class="done ">
                                 <input type="checkbox" onclick="completed(this)">
                             </span>
@@ -76,6 +76,9 @@ function aside_completed_task(task, direction) {
 
 var animatorTime = 1;
 function addnew(nodeToBeAdded) {
+    // to focus the input field
+    n("#task_container").scrollBy(0,-n("#task_container").scrollTop);
+    
     // If no List Selected 
     var all_list = document.querySelector(".list");
     if (!all_list) {
@@ -256,7 +259,7 @@ function renderTasks(tasks) {
             status = "";
             tname = `<span class="task_name" onclick="expandTask(this)">${element["taskname"]}</span>`;
         }
-        var tmp_task = `<div class="task" data-task-id="${element.tasks_task_id}"   data-task-description="${element.tasks_description || 0}" data-task-finishing-time="${element.tasks_finish_within}">
+        var tmp_task = `<div class="task" data-task-id="${element.tasks_task_id}"   data-task-description="${element.tasks_description || ''}" data-task-finishing-time="${element.tasks_finish_within}">
                             <span class="done">
                                 <input type="checkbox" onclick="completed(this)" ${status}>
                             </span>
@@ -327,6 +330,16 @@ function updateOnline(operation, elem, taskNameOld) {
     xmlhttp.open("POST", "backend.php", false);
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlhttp.send(sql_operation);
+    
+    if( xmlhttp.responseText == "saveSuccess" ) {
+        var numberTagList = document.querySelector(".selected").querySelector(".numberTagList");
+        numberTagList.innerText = parseInt(numberTagList.innerText) + 1;
+    }
+    if( xmlhttp.responseText == "deleteSuccess" ) {
+        var numberTagList = document.querySelector(".selected").querySelector(".numberTagList");
+        numberTagList.innerText = parseInt(numberTagList.innerText) - 1;
+    }
+
     //console.log(sql_operation);
     // n("")
 
@@ -386,8 +399,7 @@ window.onload = function() {
     onStartUp();
     //attachEvents();
 
-}
-;
+};
 
 function disappear(node, transition) {
     node.style.transitionDuration = transition ? transition : ".5s";
@@ -579,6 +591,32 @@ function GKEdit(node, type) {
     });
 }
 
+
+function printTaskList() {
+
+    var listToBePrinted = document.querySelector("#task_container");
+    listToBePrinted.style.margin = "50px auto";
+    listToBePrinted.style.width = document.querySelector("#container").offsetWidth + "px";
+    listToBePrinted.style.height = "auto";
+    listToBePrinted.style.overflow = "visible";
+    listToBePrinted = listToBePrinted.outerHTML;
+    body = document.createElement("div");
+    body.setAttribute("id","printedBody");
+    body.setAttribute("style",`
+        width:100%;
+        height:100%;
+        position:absolute;
+        z-index:90000;
+        background-color:white;
+    `);
+    body.innerHTML = listToBePrinted;
+    var bodyReserve = document.body.innerHTML;
+    document.body.innerHTML = "";
+    document.body.appendChild(body);
+}
+
+
+
 // List of all the fucntions
 // signout();
 // removeOld();
@@ -590,3 +628,6 @@ function GKEdit(node, type) {
 // addnew();
 // completed();
 // createNewTask();
+// GKEdit();
+// printTaskList();
+

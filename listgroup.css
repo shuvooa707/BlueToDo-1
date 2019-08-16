@@ -1,20 +1,32 @@
 #listgroup-container{
     border: .1em solid #563d7c;
-    /* border-radius: 10px; */
+    border-radius: 10px;
     /* box-shadow: inset 0px 2px 20px 0px #5c59598f; */
     min-width: 400px;
     width: auto;
-    min-height: 130px;
+    height: 600px;
     background: #ffffff;
     position: relative;
-    float:left;
-    top: 100px;
+    /* float:left; */
+    /* top: 50px; */
     /* padding: 10px; */
-    margin-left: 50px;
-    margin-bottom: 20px;
+    /* margin-left: 50px; */
+    /* margin-bottom: 20px; */
     padding-top: 10px;
+    margin-top: 50px;
+    margin-bottom: 30px;
     overflow: hidden;
+    padding-bottom: 40px;
 }
+#listgroup-container::after{
+    content:"";
+    width: 100%;
+    height:40px;
+    background:#1c1b1b;
+    position:absolute;
+    bottom:0px;
+}
+
 #list-container-header{
     width: 100%;
     background: #1c1b1b;
@@ -28,7 +40,7 @@
     text-align: center;
 }
 #list_container{
-    height:450px;
+    height: 428px;
     overflow:auto;
     padding-top: 13px;
 }
@@ -71,6 +83,7 @@ span.list-date {
     /* padding-bottom: 5px; */
     transition-duration: .1s;
     position: relative;
+    padding-bottom: 5px;
 }
 .list:first-child {
     margin-top: -12px;
@@ -154,7 +167,7 @@ span.list-date {
     color: #515151;
     font-weight: 700;
     transition-duration: .2s;
-    margin-top:6px;
+    margin-top: 13px;
     outline: none;
 }
 
@@ -205,15 +218,18 @@ span.list-date {
 }
 
 .numberTagList{
-    border: .03em solid #1c1b1b;
+    border: 1px solid #1c1b1b;
     cursor: pointer;
-    width: 20px;
+    width: 25px;
     height: 20px;
     margin: 12px 9px;
     text-align: center;
     line-height: 20px;
     display: block;
     float: left;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: -1px;
     background: white;
     color: #563d7c;
     border-radius: 2px;
