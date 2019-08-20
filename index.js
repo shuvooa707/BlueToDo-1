@@ -91,7 +91,8 @@ function addnew(nodeToBeAdded) {
         setTimeout(()=>{
             nodeToBeAdded.style.opacity = "1";
         }
-        , (animatorTime++) * 100);
+        , (animatorTime) * 100);
+        animatorTime += .5;
         document.querySelector("#task_container").appendChild(nodeToBeAdded);
     } else {
         createNewTask();
@@ -334,12 +335,13 @@ function updateOnline(operation, elem, taskNameOld) {
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlhttp.send(sql_operation);
     
-    var respnseStatus = JSON.parse(xmlhttp.responseText)["respnseStatus"] || "";
     if( respnseStatus == "saveSuccess" ) {
+        var respnseStatus = JSON.parse(xmlhttp.responseText)["respnseStatus"] || "";
         var numberTagList = document.querySelector(".selected").querySelector(".numberTagList");
         numberTagList.innerText = parseInt(numberTagList.innerText) + 1;
     }
     if( respnseStatus == "deleteSuccess" ) {
+        var respnseStatus = JSON.parse(xmlhttp.responseText)["respnseStatus"] || "";
         var numberTagList = document.querySelector(".selected").querySelector(".numberTagList");
         numberTagList.innerText = parseInt(numberTagList.innerText) - 1;
     }

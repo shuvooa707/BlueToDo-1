@@ -115,7 +115,10 @@
         $sql = "UPDATE `tasks` SET `status`='done' WHERE tasks_task_id=".$task_id;
         $result = $conn->query($sql);
         $sql = "SELECT * FROM tasks ORDER BY tasks_created_at";
-        $result = $conn->query($sql);
+        $result = $conn->query($sql);        
+        if( $result ) {
+            echo '{"respnseStatus":"completeSuccess"}';
+        }
 
     } elseif ( isset($_POST["op"]) && $_POST["op"] == "unfinished") {
         $task_id = $_POST["tasks_task_id"];
@@ -123,6 +126,9 @@
         echo $taskname;
         $sql = "UPDATE `tasks` SET `status`='unfinished' WHERE tasks_task_id=".$task_id;
         $result = $conn->query($sql);
+        if( $result ) {
+            echo '{"respnseStatus":"unfinishedSuccess"}';
+        }
 
     } elseif ( isset($_POST["op"]) && $_POST["op"] == "save") {
         $tasks_list_id = $_POST["tasks_list_id"];
